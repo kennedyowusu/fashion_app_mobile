@@ -39,6 +39,11 @@ class _MainLayoutState extends State<MainLayout> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
         onTap: (page) {
           currentPage = page;
           _page.animateToPage(
@@ -50,16 +55,18 @@ class _MainLayoutState extends State<MainLayout> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.home),
-            label: 'Home',
+            icon: FaIcon(
+              FontAwesomeIcons.houseUser,
+            ),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.heart),
-            label: 'Orders',
+            icon: FaIcon(FontAwesomeIcons.solidHeart),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.user),
-            label: 'Profile',
+            icon: FaIcon(FontAwesomeIcons.solidCircleUser),
+            label: '',
           ),
         ],
       ),

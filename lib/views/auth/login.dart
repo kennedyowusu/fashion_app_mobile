@@ -43,9 +43,6 @@ class _LoginViewState extends State<LoginView> {
               prefixIconColor: Colors.grey,
             ),
           ),
-          SizedBox(
-            height: 25.0,
-          ),
           GetBuilder<ObscurePassword>(
             builder: (controller) => TextFormField(
               controller: _passController,
@@ -78,7 +75,9 @@ class _LoginViewState extends State<LoginView> {
           Button(
             width: double.infinity,
             title: 'Sign In',
-            onPressed: () async {},
+            onPressed: () async {
+              Get.to(() => const MainLayout(),);
+            },
             disable: false,
           ),
         ],

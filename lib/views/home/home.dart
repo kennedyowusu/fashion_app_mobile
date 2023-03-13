@@ -1,3 +1,4 @@
+import 'package:fashion_app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -6,11 +7,13 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Fashion Shop'),
+      appBar: CustomAppBar(
+        title: 'Fashion Shop',
       ),
-      body: Center(
-        child: Text('Home View'),
+      body: SafeArea(
+        child: Center(
+          child: Text('Home View'),
+        ),
       ),
     );
   }

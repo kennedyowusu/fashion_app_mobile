@@ -1,11 +1,12 @@
 import 'package:fashion_app/controller/obscure_password.dart';
 import 'package:fashion_app/helper/config.dart';
+import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/widgets/Button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterView extends StatelessWidget {
-  RegisterView() : super();
+  RegisterView({super.key});
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -26,7 +27,11 @@ class RegisterView extends StatelessWidget {
           Button(
             width: double.infinity,
             title: 'Sign Up',
-            onPressed: () async {},
+            onPressed: () async {
+              Get.to(
+                () => const MainLayout(),
+              );
+            },
             disable: false,
           ),
         ],

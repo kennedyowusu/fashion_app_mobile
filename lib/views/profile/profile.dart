@@ -1,3 +1,4 @@
+import 'package:fashion_app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatelessWidget {
@@ -5,6 +6,15 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Fashion Shop',
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Text('Profile View'),
+        ),
+      ),
+    );
   }
 }
