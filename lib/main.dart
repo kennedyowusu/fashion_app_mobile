@@ -1,9 +1,9 @@
-import 'package:fashion_app/views/home/home.dart';
+import 'package:fashion_app/views/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp( FashionApp());
+  runApp(FashionApp());
 }
 
 class FashionApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class FashionApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeView()
+      home: AuthSelector(),
     );
   }
 }

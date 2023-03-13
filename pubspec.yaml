@@ -38,6 +38,8 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.1.1
   carousel_slider: ^4.2.1
+  font_awesome_flutter: ^10.4.0
+  lottie: ^2.2.0
 
 dev_dependencies:
   flutter_test:
