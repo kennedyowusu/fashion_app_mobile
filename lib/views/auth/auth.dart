@@ -25,88 +25,96 @@ class _AuthSelectorState extends State<AuthSelector> {
     Config.init(context);
     return SafeArea(
       child: Scaffold(
-          body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 35,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Spacer(),
-            Text(
-              AppText.enText['welcome_text']!,
-              style: const TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Config.primaryColor,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 35,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Spacer(),
+              Text(
+                AppText.enText['welcome_text']!,
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Config.primaryColor,
+                ),
               ),
-            ),
-            Config.spaceSmall,
-            Text(
+              Config.spaceSmall,
+              Text(
+                isSignIn
+                    ? AppText.enText['signIn_text']!
+                    : AppText.enText['register_text']!,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Spacer(),
+              Visibility(
+                visible: isSignIn,
+                child: LoginView(),
+              ),
+              Visibility(
+                visible: !isSignIn,
+                child: RegisterView(),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
               isSignIn
-                  ? AppText.enText['signIn_text']!
-                  : AppText.enText['register_text']!,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const Spacer(),
-            isSignIn ? const LoginView() : RegisterView(),
-            SizedBox(
-              height: 10.0,
-            ),
-            isSignIn
-                ? Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        AppText.enText['forgot-password']!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          AppText.enText['forgot-password']!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
                         ),
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              const Spacer(flex: 2),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    isSignIn
+                        ? AppText.enText['signUp_text']!
+                        : AppText.enText['registered_text']!,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        isSignIn = !isSignIn;
+                      });
+                    },
+                    child: Text(
+                      isSignIn ? 'Sign Up' : 'Sign In',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF4682B4),
                       ),
                     ),
                   )
-                : SizedBox.shrink(),
-            const Spacer(flex: 2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  isSignIn
-                      ? AppText.enText['signUp_text']!
-                      : AppText.enText['registered_text']!,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey.shade500,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      isSignIn = !isSignIn;
-                    });
-                  },
-                  child: Text(
-                    isSignIn ? 'Sign Up' : 'Sign In',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF4682B4),
-                    ),
-                  ),
-                )
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }
