@@ -17,7 +17,7 @@ class UserService {
       );
 
       if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body ?? '');
+        final jsonResponse = jsonDecode(response.body);
         UserModel userData = UserModel.fromJson(jsonResponse);
         return userData;
       } else {

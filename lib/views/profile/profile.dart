@@ -54,7 +54,7 @@ class ProfileView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Name: ${user!.name}',
+                                  'Name: ${user.name}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -63,7 +63,7 @@ class ProfileView extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
-                                  userController.user.value!.email.toString(),
+                                  userController.user.value.email.toString(),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
