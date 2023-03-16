@@ -4,17 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+/*
+  Read the user's token from GetStorage. If the token is not empty, 
+  it means the user is logged in so set the isUserLoggedIn variable to true. 
+  Then pass this value to the FashionApp widget, 
+  which then decides which screen to show based on the isUserLoggedIn variable.
+**/
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final box = GetStorage();
-  runApp(FashionApp(loggedIn: box.read('loggedIn') ?? false));
+  final token = box.read('token') ?? '';
+  runApp(FashionApp(isUserLoggedIn: token.isNotEmpty));
 }
 
 class FashionApp extends StatelessWidget {
-  final bool loggedIn;
+  final bool isUserLoggedIn;
 
-  const FashionApp({required this.loggedIn, Key? key}) : super(key: key);
+  const FashionApp({required this.isUserLoggedIn, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,7 @@ class FashionApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: loggedIn ? const MainLayout() : const AuthSelector(),
+      home: isUserLoggedIn ? const MainLayout() : const AuthSelector(),
     );
   }
 }
