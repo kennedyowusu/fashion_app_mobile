@@ -1,6 +1,6 @@
+import 'package:fashion_app/controller/authentication.dart';
 import 'package:fashion_app/controller/obscure_password.dart';
 import 'package:fashion_app/helper/config.dart';
-import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/widgets/Button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,31 +8,62 @@ import 'package:get/get.dart';
 class RegisterView extends StatelessWidget {
   RegisterView({super.key});
 
-  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
+  final _confirmPassController = TextEditingController();
+  final _locationController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _phoneController = TextEditingController();
+
+  final AuthenticationController authController =
+      Get.put(AuthenticationController());
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: authController.formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           _buildNameTextField(),
           _buildEmailTextField(),
           _buildPasswordTextField(),
+          _buildConfirmPasswordTextField(),
+          _buildLocationTextField(),
+          _buildAddressTextField(),
+          _buildPhoneTextField(),
           Config.spaceSmall,
-          Button(
-            width: double.infinity,
-            title: 'Sign Up',
-            onPressed: () async {
-              Get.to(
-                () => const MainLayout(),
-              );
+          Obx(
+            () {
+              if (authController.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Config.primaryColor,
+                  ),
+                );
+              } else {
+                return Button(
+                  width: double.infinity,
+                  title: 'Sign Up',
+                  onPressed: () async {
+                    if (authController.formKey.currentState!.validate()) {
+                      authController.registerUser(
+                        name: _nameController.text,
+                        email: _emailController.text,
+                        password: _passController.text,
+                        passwordConfirmation: _confirmPassController.text,
+                        location: _locationController.text,
+                        address: _addressController.text,
+                        phone: _phoneController.text,
+                      );
+                    }
+                  },
+                  disable: authController.isLoading.value,
+                );
+              }
             },
-            disable: false,
           ),
         ],
       ),
@@ -97,6 +128,90 @@ class RegisterView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildConfirmPasswordTextField() {
+    return GetBuilder<ObscurePassword>(
+      builder: (controller) {
+        return TextFormField(
+          controller: _confirmPassController,
+          keyboardType: TextInputType.visiblePassword,
+          cursorColor: Colors.black,
+          obscureText: controller.obscurePass,
+          decoration: InputDecoration(
+            hintText: 'Confirm Password',
+            labelText: 'Confirm Password',
+            prefixIcon: const Icon(Icons.lock_outline),
+            prefixIconColor: Colors.grey,
+            suffixIcon: IconButton(
+              onPressed: () {
+                controller.toggleObscurePass();
+              },
+              icon: controller.obscurePass
+                  ? const Icon(
+                      Icons.visibility_off_outlined,
+                      color: Colors.black38,
+                    )
+                  : const Icon(
+                      Icons.visibility_outlined,
+                      color: Colors.grey,
+                    ),
+            ),
+          ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Please enter your password';
+            }
+            if (value != _passController.text) {
+              return 'Password does not match';
+            }
+            return null;
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildLocationTextField() {
+    return TextFormField(
+      controller: _locationController,
+      keyboardType: TextInputType.text,
+      cursorColor: Colors.black,
+      decoration: const InputDecoration(
+        hintText: 'Location',
+        labelText: 'Location',
+        prefixIcon: Icon(Icons.location_on_outlined),
+        prefixIconColor: Colors.grey,
+      ),
+    );
+  }
+
+  Widget _buildAddressTextField() {
+    return TextFormField(
+      controller: _addressController,
+      keyboardType: TextInputType.text,
+      cursorColor: Colors.black,
+      decoration: const InputDecoration(
+        hintText: 'Address',
+        labelText: 'Address',
+        prefixIcon: Icon(Icons.location_on_outlined),
+        prefixIconColor: Colors.grey,
+      ),
+    );
+  }
+
+  Widget _buildPhoneTextField() {
+    return TextFormField(
+      controller: _phoneController,
+      keyboardType: TextInputType.text,
+      cursorColor: Colors.black,
+      decoration: const InputDecoration(
+        hintText: 'Phone Number',
+        labelText: 'Phone Number',
+        prefixIcon: Icon(Icons.phone_outlined),
+        prefixIconColor: Colors.grey,
+      ),
     );
   }
 }

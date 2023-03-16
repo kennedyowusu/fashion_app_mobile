@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/services/endpoints.dart';
-import 'package:fashion_app/views/auth/login.dart';
+import 'package:fashion_app/views/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -69,7 +69,11 @@ class AuthenticationController extends GetxController {
         debugPrint('${json.decode(response.body)['message']}');
 
         // Show error message to the user using a snackbar
-        Get.snackbar('Error', 'Registration Failed');
+        Get.snackbar(
+          'Error',
+          '${json.decode(response.body)['message']}',
+          snackPosition: SnackPosition.BOTTOM,
+        );
       }
     } catch (e) {
       // An error occurred
@@ -85,8 +89,6 @@ class AuthenticationController extends GetxController {
   }
 
   /// Logs in a user with the given [email] and [password].
-  ///
-  /// Returns `true` if the login was successful, `false` otherwise.
   Future<bool> loginUser({
     required String email,
     required String password,
@@ -117,7 +119,11 @@ class AuthenticationController extends GetxController {
       } else {
         isLoading(false);
         debugPrint('${json.decode(response.body)['message']}');
-        Get.snackbar('Error', 'Login Failed');
+        Get.snackbar(
+          'Error',
+          '${json.decode(response.body)['message']}',
+          snackPosition: SnackPosition.BOTTOM,
+        );
         return false;
       }
     } catch (e) {
@@ -134,6 +140,6 @@ class AuthenticationController extends GetxController {
   Future<void> logoutUser() async {
     token.value = '';
     box.remove('token');
-    await Get.offAll(() => const LoginView());
+    await Get.offAll(() => const AuthSelector());
   }
 }
