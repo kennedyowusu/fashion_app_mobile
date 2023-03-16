@@ -4,7 +4,7 @@ import 'dart:convert';
 class User {
   final String accessToken;
   final String tokenType;
-  final UserClass user;
+  final UserModel user;
 
   // Constructor
   User({
@@ -18,7 +18,7 @@ class User {
     return User(
       accessToken: json["access_token"],
       tokenType: json["token_type"],
-      user: UserClass.fromJson(json["user"]),
+      user: UserModel.fromJson(json["user"]),
     );
   }
 
@@ -31,31 +31,31 @@ class User {
 }
 
 // Represents a user's details
-class UserClass {
-  final String name;
-  final String email;
-  final String location;
-  final String address;
-  final String phone;
-  final DateTime updatedAt;
-  final DateTime createdAt;
-  final int id;
+class UserModel {
+  String? name = '';
+  String? email = '';
+  String? location = '';
+  String? address = '';
+  String? phone = '';
+  DateTime? updatedAt = DateTime.now();
+  DateTime? createdAt = DateTime.now();
+  int? id = 0;
 
   // Constructor
-  UserClass({
-    required this.name,
-    required this.email,
-    required this.location,
-    required this.address,
-    required this.phone,
-    required this.updatedAt,
-    required this.createdAt,
-    required this.id,
+  UserModel({
+    this.name,
+    this.email,
+    this.location,
+    this.address,
+    this.phone,
+    this.updatedAt,
+    this.createdAt,
+    this.id,
   });
 
-  // Factory constructor to create UserClass object from JSON
-  factory UserClass.fromJson(Map<String, dynamic> json) {
-    return UserClass(
+  // Factory constructor to create UserModel object from JSON
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       name: json["name"],
       email: json["email"],
       location: json["location"],
@@ -67,15 +67,15 @@ class UserClass {
     );
   }
 
-  // Convert UserClass object to JSON
+  // Convert UserModel object to JSON
   Map<String, dynamic> toJson() => {
         "name": name,
         "email": email,
         "location": location,
         "address": address,
         "phone": phone,
-        "updated_at": updatedAt.toIso8601String(),
-        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
         "id": id,
       };
 }
