@@ -1,6 +1,6 @@
+import 'package:fashion_app/controller/authentication.dart';
 import 'package:fashion_app/controller/obscure_password.dart';
 import 'package:fashion_app/helper/config.dart';
-import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/widgets/Button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
   late final ObscurePassword _passwordController;
@@ -24,11 +23,14 @@ class _LoginViewState extends State<LoginView> {
     _passwordController = Get.put(ObscurePassword());
   }
 
+  final AuthenticationController authController =
+      Get.put(AuthenticationController());
+
   @override
   Widget build(BuildContext context) {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      key: _formKey,
+      key: authController.formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -72,13 +74,30 @@ class _LoginViewState extends State<LoginView> {
           SizedBox(
             height: 25.0,
           ),
-          Button(
-            width: double.infinity,
-            title: 'Sign In',
-            onPressed: () async {
-              Get.to(() => const MainLayout(),);
+          Obx(
+            () {
+              if (authController.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Config.primaryColor,
+                  ),
+                );
+              } else {
+                return Button(
+                  width: double.infinity,
+                  title: 'Sign In',
+                  onPressed: () async {
+                    if (authController.formKey.currentState!.validate()) {
+                      authController.loginUser(
+                        email: _emailController.text,
+                        password: _passController.text,
+                      );
+                    }
+                  },
+                  disable: authController.isLoading.value,
+                );
+              }
             },
-            disable: false,
           ),
         ],
       ),
