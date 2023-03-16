@@ -65,6 +65,7 @@ class RegisterView extends StatelessWidget {
               }
             },
           ),
+           Config.spaceBig,
         ],
       ),
     );
