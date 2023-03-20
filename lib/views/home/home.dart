@@ -57,7 +57,6 @@ class HomeView extends StatelessWidget {
               buildCarouselSlider(),
               SizedBox(height: 20),
               buildCategories(),
-              // SizedBox(height: height / 500),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
@@ -94,56 +93,60 @@ class HomeView extends StatelessWidget {
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(20),
       ),
-      child: TextField(
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'Search',
-          icon: Icon(Icons.search),
+          hintStyle: TextStyle(
+            color: Colors.grey,
+          ),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.grey,
+          ),
         ),
       ),
     );
   }
 
   buildCarouselSlider() {
-    return SizedBox(
-      height: 200,
-      child: CarouselSlider(
-        options: CarouselOptions(
-          height: 200,
-          viewportFraction: 0.8,
-          autoPlay: true,
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enlargeCenterPage: true,
-          scrollDirection: Axis.horizontal,
-        ),
-        items: [
-          'Hello',
-          'World',
-          'Kennedy',
-          'Kenny',
-          'Kendrick',
-        ].map((i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                // child: Image.asset(
-                //   i,
-                //   fit: BoxFit.cover,
-                // ),
-                child: Text(i),
-              );
-            },
-          );
-        }).toList(),
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 200,
+        viewportFraction: 0.8,
+        autoPlay: true,
+        autoPlayInterval: Duration(seconds: 3),
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enlargeCenterPage: true,
+        scrollDirection: Axis.horizontal,
       ),
+      items: [
+        'Hello',
+        'World',
+        'Kennedy',
+        'Kenny',
+        'Kendrick',
+      ].map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(5),
+              ),
+              // child: Image.asset(
+              //   i,
+              //   fit: BoxFit.cover,
+              // ),
+              child: Text(i),
+            );
+          },
+        );
+      }).toList(),
     );
   }
 
