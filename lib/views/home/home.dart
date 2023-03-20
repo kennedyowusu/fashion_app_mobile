@@ -8,7 +8,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height / 2;
     final box = GetStorage();
     final token = box.read('token') ?? '';
 
@@ -58,9 +57,9 @@ class HomeView extends StatelessWidget {
               buildCarouselSlider(),
               SizedBox(height: 20),
               buildCategories(),
-              SizedBox(height: height / 120),
+              // SizedBox(height: height / 500),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                   children: [
                     Text(
@@ -75,6 +74,8 @@ class HomeView extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 10),
+              buildPopularProducts(),
               Center(
                 child: Text(token),
               ),
@@ -148,8 +149,8 @@ class HomeView extends StatelessWidget {
 
   buildCategories() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      height: 80,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      height: 60,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),
@@ -157,7 +158,7 @@ class HomeView extends StatelessWidget {
         itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
-            margin: const EdgeInsets.only(right: 20),
+            margin: const EdgeInsets.only(right: 10),
             child: Column(
               children: [
                 Container(
@@ -168,8 +169,47 @@ class HomeView extends StatelessWidget {
                   ),
                   child: Icon(Icons.access_alarm),
                 ),
-                SizedBox(height: 10),
-                Text('Category $index'),
+                // SizedBox(height: 10),
+                // Text('Category $index'),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  buildPopularProducts() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      height: 150,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 150,
+            margin: const EdgeInsets.only(right: 10),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(Icons.access_alarm),
+                    ),
+                    SizedBox(height: 10),
+                    Text('Product $index'),
+                  ],
+                ),
               ],
             ),
           );
