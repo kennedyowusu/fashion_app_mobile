@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+  HomeView({Key? key}) : super(key: key);
+
+  TextStyle style = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,7 @@ class HomeView extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildSearchField(),
               SizedBox(height: 20),
@@ -63,10 +69,7 @@ class HomeView extends StatelessWidget {
                   children: [
                     Text(
                       'Popular: ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: style,
                     ),
                     Spacer(),
                     Text('View All'),
@@ -75,9 +78,19 @@ class HomeView extends StatelessWidget {
               ),
               SizedBox(height: 10),
               buildPopularProducts(),
-              Center(
-                child: Text(token),
+              SizedBox(height: 0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'New Arrival Products',
+                  style: style,
+                ),
               ),
+              SizedBox(height: 10),
+              // Center(
+              //   child: Text(token),
+              // ),
+              buildTrendingProducts(),
             ],
           ),
         ),
@@ -183,6 +196,45 @@ class HomeView extends StatelessWidget {
   }
 
   buildPopularProducts() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      height: 150,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: BouncingScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 150,
+            margin: const EdgeInsets.only(right: 10),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(Icons.access_alarm),
+                    ),
+                    SizedBox(height: 10),
+                    Text('Product $index'),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  buildTrendingProducts() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       height: 150,
