@@ -8,12 +8,46 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height / 2;
     final box = GetStorage();
     final token = box.read('token') ?? '';
 
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Fashion Shop',
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.shopping_cart),
+              ),
+              Positioned(
+                top: 0,
+                right: 12,
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 16,
+                    minHeight: 16,
+                  ),
+                  child: Text(
+                    '0',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -24,6 +58,23 @@ class HomeView extends StatelessWidget {
               buildCarouselSlider(),
               SizedBox(height: 20),
               buildCategories(),
+              SizedBox(height: height / 120),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Popular: ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    Text('View All'),
+                  ],
+                ),
+              ),
               Center(
                 child: Text(token),
               ),
@@ -98,10 +149,11 @@ class HomeView extends StatelessWidget {
   buildCategories() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      height: 100,
+      height: 80,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),
+        shrinkWrap: true,
         itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
