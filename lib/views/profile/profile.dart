@@ -157,7 +157,7 @@ class ProfileView extends StatelessWidget {
                             children: [
                               Text(
                                 'Personal Information',
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               SizedBox(height: 10),
                               ListTile(
@@ -220,7 +220,7 @@ class ProfileView extends StatelessWidget {
                             children: [
                               Text(
                                 'Account Information',
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               SizedBox(height: 10),
                               ListTile(
