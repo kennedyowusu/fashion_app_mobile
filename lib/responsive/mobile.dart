@@ -1,3 +1,4 @@
+import 'package:fashion_app/helper/config.dart';
 import 'package:fashion_app/widgets/build_carousel.dart';
 import 'package:fashion_app/widgets/build_categories.dart';
 import 'package:fashion_app/widgets/build_popular_products.dart';
@@ -13,43 +14,39 @@ class MobileLayout extends StatelessWidget {
     fontWeight: FontWeight.bold,
   );
 
+  final Config config = Config();
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 10),
         BuildSearchFields(),
         SizedBox(height: 20),
-        BuildCarousel(),
+        BuildCarousel(
+          height: 200,
+        ),
         SizedBox(height: 20),
-        BuildCategories(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
-            children: [
-              Text(
-                'Popular: ',
-                style: style,
-              ),
-              Spacer(),
-              Text('View All'),
-            ],
-          ),
+        BuildCategories(
+          rightPadding: 10,
+        ),
+        config.buildPopularPadding(
+          text: 'Popular: ',
         ),
         SizedBox(height: 10),
-        BuildPopularProducts(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Text(
-            'New Arrival Products',
-            style: style,
-          ),
+        BuildPopularProducts(height: 100.0, width: 100.0),
+        config.buildPopularPadding(
+          text: 'New Arrival Products: ',
         ),
         SizedBox(height: 10),
         // Center(
         //   child: Text(token),
         // ),
-        BuildTrendingProducts(),
+        BuildTrendingProducts(
+          height: 100.0,
+          width: 100.0,
+        ),
       ],
     );
   }

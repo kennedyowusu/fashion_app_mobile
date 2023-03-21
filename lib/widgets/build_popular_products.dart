@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class BuildPopularProducts extends StatelessWidget {
-  const BuildPopularProducts({super.key});
+  const BuildPopularProducts({
+    super.key,
+    required this.height,
+    required this.width,
+  });
+
+  final double height;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +29,8 @@ class BuildPopularProducts extends StatelessWidget {
                 Column(
                   children: [
                     Container(
-                      height: 100,
-                      width: 100,
+                      height: height,
+                      width: width,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],

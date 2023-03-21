@@ -2,13 +2,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class BuildCarousel extends StatelessWidget {
-  const BuildCarousel({super.key});
+  const BuildCarousel({super.key, required this.height});
+
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 200,
+        height: height,
         viewportFraction: 0.8,
         autoPlay: true,
         autoPlayInterval: Duration(seconds: 3),

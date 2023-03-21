@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BuildCategories extends StatelessWidget {
-  const BuildCategories({super.key});
+  const BuildCategories({super.key, required this.rightPadding});
+  final double rightPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,12 @@ class BuildCategories extends StatelessWidget {
         itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
-            margin: const EdgeInsets.only(right: 10),
+            margin: EdgeInsets.only(right: rightPadding),
             child: Column(
               children: [
                 Container(
                   padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(left: 15),
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
