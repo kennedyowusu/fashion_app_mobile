@@ -4,17 +4,17 @@ class BuildPopularProducts extends StatelessWidget {
   const BuildPopularProducts({
     super.key,
     required this.height,
-    required this.width,
+    required this.width, required this.responsiveHeight,
   });
 
-  final double height;
+  final double height, responsiveHeight;
   final double width;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      height: 150,
+      height: responsiveHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),

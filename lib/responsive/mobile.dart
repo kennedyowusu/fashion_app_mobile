@@ -18,6 +18,7 @@ class MobileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,7 +36,11 @@ class MobileLayout extends StatelessWidget {
           text: 'Popular: ',
         ),
         SizedBox(height: 10),
-        BuildPopularProducts(height: 100.0, width: 100.0),
+        BuildPopularProducts(
+          responsiveHeight: height * 0.160,
+          height: 100.0,
+          width: 100.0,
+        ),
         config.buildPopularPadding(
           text: 'New Arrival Products: ',
         ),

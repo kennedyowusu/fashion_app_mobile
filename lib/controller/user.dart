@@ -21,11 +21,11 @@ class UserController extends GetxController {
   Future<void> readUserData() async {
     try {
       isLoading.value = true;
-      final box = GetStorage().read('token');
-      if (box != null) {
-        UserModel? userData = await UserService().getUserData(box);
+      final token = GetStorage().read('token');
+      if (token != null) {
+        UserResponse? userData = await UserService().getUserData(token);
         if (userData != null) {
-          user.value = userData;
+          user.value = userData.data;
           debugPrint('User: ${user.value.name}');
         } else {
           debugPrint('Failed to load user data');

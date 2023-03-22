@@ -18,6 +18,8 @@ class TabletDesktopLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         SizedBox(height: 10),
@@ -34,7 +36,11 @@ class TabletDesktopLayout extends StatelessWidget {
           text: 'Popular: ',
         ),
         SizedBox(height: 10),
-        BuildPopularProducts(height: 120.0, width: 120.0),
+        BuildPopularProducts(
+          responsiveHeight: height * 0.170,
+          height: 120.0,
+          width: 120.0,
+        ),
         SizedBox(height: 20),
         config.buildPopularPadding(
           text: 'New Arrival Products: ',

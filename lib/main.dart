@@ -15,6 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final box = GetStorage();
+  // box.remove('token');
   final token = box.read('token') ?? '';
   runApp(FashionApp(isUserLoggedIn: token.isNotEmpty));
 }

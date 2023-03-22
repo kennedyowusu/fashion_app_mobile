@@ -5,11 +5,10 @@ import 'package:fashion_app/services/endpoints.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {
-
-  Future<UserModel?> getUserData(String token) async {
+  Future<UserResponse?> getUserData(String token) async {
     try {
       final response = await http.get(
-        Uri.parse(USER_URL),
+        Uri.parse(PROFILE_URL),
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
@@ -18,7 +17,8 @@ class UserService {
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-        UserModel userData = UserModel.fromJson(jsonResponse);
+        UserResponse userData = UserResponse.fromJson(jsonResponse);
+        print("user data: $userData");
         return userData;
       } else {
         throw Exception('Failed to load user data');
@@ -27,5 +27,4 @@ class UserService {
       throw Exception('Failed to load user data: $e');
     }
   }
-  
 }
