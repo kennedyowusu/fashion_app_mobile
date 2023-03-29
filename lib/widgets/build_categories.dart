@@ -21,31 +21,33 @@ class BuildCategories extends StatelessWidget {
         shrinkWrap: true,
         itemCount: categoriesController.categories.length,
         itemBuilder: (context, index) {
-          return Container(
-            margin: EdgeInsets.only(right: rightPadding),
-            child: Column(
-              children: [
-                SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    border: Border.all(
-                      color: Colors.grey[300]!,
-                      width: 1.0,
+          return Obx(
+            () => Container(
+              margin: EdgeInsets.only(right: rightPadding),
+              child: Column(
+                children: [
+                  SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(
+                        color: Colors.grey[300]!,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Text(
+                      categoriesController.categories[index].name,
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                  child: Text(
-                    categoriesController.categories[index].name,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
