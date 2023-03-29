@@ -30,7 +30,7 @@ class MobileLayout extends StatelessWidget {
         ),
         SizedBox(height: 20),
         config.buildPopularPadding(
-          text: 'Categories: ',
+          text: 'Categories',
           otherText: "",
         ),
         SizedBox(height: 10),
@@ -38,7 +38,7 @@ class MobileLayout extends StatelessWidget {
           rightPadding: 10,
         ),
         config.buildPopularPadding(
-          text: 'Popular: ',
+          text: 'Popular ',
         ),
         SizedBox(height: 10),
         BuildPopularProducts(
@@ -47,12 +47,9 @@ class MobileLayout extends StatelessWidget {
           width: 100.0,
         ),
         config.buildPopularPadding(
-          text: 'New Arrival Products: ',
+          text: 'New Arrival Products ',
         ),
         SizedBox(height: 10),
-        // Center(
-        //   child: Text(token),
-        // ),
         BuildTrendingProducts(
           height: 100.0,
           width: 100.0,
