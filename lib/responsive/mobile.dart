@@ -37,7 +37,7 @@ class MobileLayout extends StatelessWidget {
         ),
         SizedBox(height: 10),
         BuildPopularProducts(
-          responsiveHeight: height * 0.160,
+          responsiveHeight: height * 0.190,
           height: 100.0,
           width: 100.0,
         ),

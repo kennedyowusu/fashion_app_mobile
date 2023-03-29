@@ -4,7 +4,8 @@ class BuildPopularProducts extends StatelessWidget {
   const BuildPopularProducts({
     super.key,
     required this.height,
-    required this.width, required this.responsiveHeight,
+    required this.width,
+    required this.responsiveHeight,
   });
 
   final double height, responsiveHeight;
@@ -22,7 +23,7 @@ class BuildPopularProducts extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (context, index) {
           return Container(
-            height: 150,
+            height: 140,
             margin: const EdgeInsets.only(right: 10),
             child: Row(
               children: [
