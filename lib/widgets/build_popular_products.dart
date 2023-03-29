@@ -48,8 +48,11 @@ class BuildPopularProducts extends StatelessWidget {
                                 width: width,
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[200],
+                                  // color: Colors.grey[200],
                                   borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.grey[300]!,
+                                  ),
                                 ),
                                 child: Image.network(
                                   popularProducts[index].image,
@@ -60,7 +63,7 @@ class BuildPopularProducts extends StatelessWidget {
                               Text(
                                 popularProducts[index].name,
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                 ),
                               ),
                             ],

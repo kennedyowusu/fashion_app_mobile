@@ -56,7 +56,7 @@ class BuildCarousel extends StatelessWidget {
                                     productController.products.indexOf(i) %
                                         colors.length]
                                 .withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(5.0),
                           ),
                           child: Image.network(
                             i.image,
