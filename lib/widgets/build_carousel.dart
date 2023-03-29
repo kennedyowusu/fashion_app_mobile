@@ -1,10 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fashion_app/widgets/project_images.dart';
 import 'package:flutter/material.dart';
 
 class BuildCarousel extends StatelessWidget {
-  const BuildCarousel({super.key, required this.height});
+  BuildCarousel({super.key, required this.height});
 
   final double height;
+
+  // create a list of colors
+  final List<Color> colors = [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +29,7 @@ class BuildCarousel extends StatelessWidget {
         scrollDirection: Axis.horizontal,
       ),
       items: [
-        'Hello',
-        'World',
-        'Kennedy',
-        'Kenny',
-        'Kendrick',
+        ...images,
       ].map((i) {
         return Builder(
           builder: (BuildContext context) {
@@ -32,14 +37,14 @@ class BuildCarousel extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 5.0),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: colors[images.indexOf(i)].withOpacity(0.5),
                 borderRadius: BorderRadius.circular(5),
               ),
-              // child: Image.asset(
-              //   i,
-              //   fit: BoxFit.cover,
-              // ),
-              child: Text(i),
+              child: Image.asset(
+                i.toString(),
+                fit: BoxFit.contain,
+              ),
+              // child: i,
             );
           },
         );
