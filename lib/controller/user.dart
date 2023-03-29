@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class UserController extends GetxController {
-  final userService = UserService();
-  final user = UserModel().obs;
-  final isLoading = false.obs;
+  final UserService userService = UserService();
+  final Rx<UserModel> user = UserModel().obs;
+  final RxBool isLoading = false.obs;
   final box = GetStorage().read('token');
 
   @override

@@ -29,6 +29,11 @@ class MobileLayout extends StatelessWidget {
           height: 200,
         ),
         SizedBox(height: 20),
+        config.buildPopularPadding(
+          text: 'Categories: ',
+          otherText: "",
+        ),
+        SizedBox(height: 10),
         BuildCategories(
           rightPadding: 10,
         ),

@@ -63,7 +63,7 @@ class Config {
             text,
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w400,
             ),
           ),
           Spacer(),
