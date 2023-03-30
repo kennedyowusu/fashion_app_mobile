@@ -38,7 +38,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Config.primaryColor,
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.grey[300]!,
+                ),
               ),
               child: Center(
                 child: IconButton(
