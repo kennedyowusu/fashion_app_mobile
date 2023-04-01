@@ -2,6 +2,7 @@ import 'package:fashion_app/controller/category_products.dart';
 import 'package:fashion_app/model/product_by_category.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class ProductsByCategoryScreen extends StatelessWidget {
@@ -14,11 +15,15 @@ class ProductsByCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsByCategoryController =
-        Get.put(ProductsByCategoryController());
+        Get.put(ProductsByCategoryController(categoryId: categoryId));
 
     return Scaffold(
       appBar: CustomAppBar(
         title: categoryName,
+        leadingIcon: FaIcon(
+          FontAwesomeIcons.chevronLeft,
+          color: Colors.black,
+        ),
         actions: [
           Stack(
             children: [
@@ -55,26 +60,29 @@ class ProductsByCategoryScreen extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(16),
-        child: Obx(() {
-          if (productsByCategoryController.productByCategory.isEmpty) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return ListView.builder(
-              itemCount: productsByCategoryController.productByCategory.length,
-              itemBuilder: (context, index) {
-                ProductModel product =
-                    productsByCategoryController.productByCategory[index];
-                return ListTile(
-                  title: Text(product.name),
-                  subtitle: Text(product.description),
-                  // trailing: Text('\$${product.price.toStringAsFixed(2)}'),
-                );
-              },
-            );
-          }
-        }),
+        child: Obx(
+          () {
+            if (productsByCategoryController.productByCategory.isEmpty) {
+              return Center(
+                child: Text('No products found'),
+              );
+            } else {
+              return ListView.builder(
+                itemCount:
+                    productsByCategoryController.productByCategory.length,
+                itemBuilder: (context, index) {
+                  ProductModel product =
+                      productsByCategoryController.productByCategory[index];
+                  return ListTile(
+                    title: Text(product.name),
+                    subtitle: Text(product.description),
+                    // trailing: Text('\$${product.price.toStringAsFixed(2)}'),
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

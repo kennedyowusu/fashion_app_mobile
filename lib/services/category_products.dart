@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:fashion_app/model/product_by_category.dart';
 import 'package:fashion_app/services/endpoints.dart';
@@ -8,8 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 class ProductsByCategoryService {
-  Future<ProductByCategoryResponse> getCategoryProducts(
-    int categoryId) async {
+  Future<ProductByCategoryResponse> getCategoryProducts(int categoryId) async {
     try {
       final token = await GetStorage().read('token');
       final url = productsByCategoryUrl(categoryId);
@@ -26,10 +24,6 @@ class ProductsByCategoryService {
 
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
-
-        debugger();
-
-        debugPrint(jsonResponse);
 
         ProductByCategoryResponse categoryProductsResponse =
             ProductByCategoryResponse.fromJson(jsonResponse);

@@ -12,13 +12,8 @@ class BuildCategories extends StatelessWidget {
   final CategoriesController categoriesController =
       Get.put(CategoriesController());
 
-  final ProductsByCategoryController categoryProductsController =
-      Get.put(ProductsByCategoryController());
-
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        "BuildCategories: ${categoryProductsController.productByCategory.length}");
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: 10,
