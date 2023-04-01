@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:fashion_app/model/categories.dart';
 import 'package:fashion_app/services/endpoints.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 class CategoriesService {
-  Future<CategoriesResponse?> getCategories(String token) async {
+  Future<CategoriesResponse> getCategories() async {
     try {
+      final token = await GetStorage().read('token');
       final response = await http.get(
         Uri.parse(CATEGORIES_URL),
         headers: {

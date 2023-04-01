@@ -26,18 +26,15 @@ class BuildCategories extends StatelessWidget {
       ),
       height: 40,
       width: double.infinity,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: categoriesController.categories.length,
-        itemBuilder: (context, index) {
-          return Obx(
-            () => GestureDetector(
+      child: Obx(
+        () => ListView.builder(
+          scrollDirection: Axis.horizontal,
+          physics: BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: categoriesController.categories.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
               onTap: () {
-                GetStorage().write(
-                    'categoryId', categoriesController.categories[index].id);
-
                 Get.to(
                   () => ProductsByCategoryScreen(
                     categoryId: categoriesController.categories[index].id,
@@ -80,9 +77,9 @@ class BuildCategories extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
