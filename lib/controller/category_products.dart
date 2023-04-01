@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class ProductsByCategoryController extends GetxController {
   int categoryId;
+  final RxBool isLoading = false.obs;
 
   ProductsByCategoryController({required this.categoryId});
 
@@ -12,21 +13,24 @@ class ProductsByCategoryController extends GetxController {
 
   @override
   onInit() {
-    getCategoryProducts(categoryId);
+    getProductsByCategory(categoryId);
     super.onInit();
   }
 
-  Future<void> getCategoryProducts(int categoryId) async {
+  Future<void> getProductsByCategory(int categoryId) async {
+    isLoading(true);
     try {
       ProductByCategoryResponse categoryProductsResponse =
           await ProductsByCategoryService().getCategoryProducts(categoryId);
 
       productByCategory.assignAll(categoryProductsResponse.data);
 
-      debugPrint('Product By Category List is: ${productByCategory.length}');
+      isLoading(false);
     } catch (e) {
+      isLoading(false);
       debugPrint('Error: $e');
     } finally {
+      isLoading(false);
       debugPrint('Product By Category: $productByCategory');
     }
   }

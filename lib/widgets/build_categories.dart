@@ -36,20 +36,6 @@ class BuildCategories extends StatelessWidget {
                     categoryName: categoriesController.categories[index].name,
                   ),
                 );
-
-                // if (categoryProductsController.productByCategory.isNotEmpty) {
-                //   Get.to(
-                //     () => ProductsByCategoryScreen(
-                //       categoryId: categoriesController.categories[index].id,
-                //       categoryName: categoriesController.categories[index].name,
-                //     ),
-                //   );
-                // } else {
-                //   debugPrint("The list is empty");
-                // }
-                print(
-                  "Category ID: ${categoriesController.categories[index].id}",
-                );
               },
               child: Container(
                 height: 40,

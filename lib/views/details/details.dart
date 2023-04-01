@@ -67,7 +67,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     backgroundColor: Colors.orange,
                   ),
                   onPressed: () {
-                    
+
                     // print(product.name);
 
                     // add the product to the cart
@@ -120,7 +120,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '\$${product.price.toString()}',
+                    'GHS${product.price.toString()}',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
