@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../model/products.dart';
-
 class ProductsByCategoryScreen extends StatelessWidget {
   const ProductsByCategoryScreen(
       {super.key, required this.categoryId, required this.categoryName});
@@ -21,6 +19,9 @@ class ProductsByCategoryScreen extends StatelessWidget {
     );
 
     return Scaffold(
+      backgroundColor: productsByCategoryController.productByCategory.isEmpty
+          ? Colors.white
+          : Colors.grey[200],
       appBar: CustomAppBar(
         leadingIcon: FaIcon(
           FontAwesomeIcons.chevronLeft,
@@ -70,7 +71,7 @@ class ProductsByCategoryScreen extends StatelessWidget {
             if (products.isEmpty && !isLoading) {
               return Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(

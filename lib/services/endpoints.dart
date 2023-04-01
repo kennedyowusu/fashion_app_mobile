@@ -1,10 +1,8 @@
-const String BASE_URL = "http://192.168.43.188:8000/api/";
+const String BASE_URL = "http://192.168.1.102:8000/api/";
 const String LOGIN_URL = "${BASE_URL}login";
 const String REGISTER_URL = "${BASE_URL}register";
 const String LOGOUT_URL = "${BASE_URL}logout";
 const String CATEGORIES_URL = "${BASE_URL}categories";
-// const String PRODUCTS_BY_CATEGORY_URL =
-//     "${BASE_URL}categories/{category}/products";
 String productsByCategoryUrl(int categoryId) =>
     "${BASE_URL}categories/$categoryId/products";
 
