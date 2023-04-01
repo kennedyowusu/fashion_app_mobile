@@ -25,11 +25,18 @@ class CategoriesResponse {
   factory CategoriesResponse.fromJson(Map<String, dynamic> json) =>
       CategoriesResponse(
         data: List<CategoriesModel>.from(
-            json["data"].map((x) => CategoriesModel.fromJson(x))),
+          json["data"].map(
+            (x) => CategoriesModel.fromJson(x),
+          ),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(
+          data.map(
+            (x) => x.toJson(),
+          ),
+        ),
       };
 }
 

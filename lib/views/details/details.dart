@@ -66,7 +66,13 @@ class ProductDetailsScreen extends StatelessWidget {
                     maximumSize: Size(100, 50),
                     backgroundColor: Colors.orange,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    
+                    // print(product.name);
+
+                    // add the product to the cart
+
+                  },
                   child: Text(
                     'Add to Cart',
                     style: TextStyle(color: Colors.white),
