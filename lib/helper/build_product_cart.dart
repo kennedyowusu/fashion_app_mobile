@@ -1,4 +1,4 @@
-import 'package:fashion_app/views/cart.dart';
+import 'package:fashion_app/views/cart/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +8,7 @@ Stack buildProductCart() {
       IconButton(
         onPressed: () {
           Get.to(
-            () => CartScreen(), 
+            () => CartScreen(),
           );
         },
         icon: Icon(Icons.shopping_cart),

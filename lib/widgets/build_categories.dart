@@ -1,9 +1,7 @@
 import 'package:fashion_app/controller/categories.dart';
-import 'package:fashion_app/controller/category_products.dart';
 import 'package:fashion_app/views/details/product_by_category_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class BuildCategories extends StatelessWidget {
   BuildCategories({super.key, required this.rightPadding});
