@@ -40,109 +40,114 @@ class CartScreen extends StatelessWidget {
             ? Center(
                 child: Text('No items in cart'),
               )
-            : ListView.separated(
-                itemCount: cartController.cartItems.length,
-                separatorBuilder: (context, index) => Divider(),
-                itemBuilder: (context, index) {
-                  final cartItem = cartController.cartItems[index];
-                  TextStyle textStyle = TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                  );
-                  return Dismissible(
-                    key: Key(cartItem.id.toString()),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (direction) {
-                      // Remove the item from the cart
-                      // cartController.removeCartItem(index);
-                    },
-                    background: Container(
-                      color: Colors.red,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Icon(Icons.delete, color: Colors.white),
+            : Obx(
+                () => ListView.separated(
+                  itemCount: cartController.cartItems.length,
+                  separatorBuilder: (context, index) => Divider(),
+                  itemBuilder: (context, index) {
+                    final cartItem = cartController.cartItems[index];
+                    TextStyle textStyle = TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
+                    );
+                    return Dismissible(
+                      key: Key(cartItem.id.toString()),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) {
+                        // Remove the item from the cart
+                        // cartController.removeCartItem(index);
+                      },
+                      background: Container(
+                        color: Colors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Icon(Icons.delete, color: Colors.white),
+                          ),
                         ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Image.network(cartItem.image),
-                          ),
-                          SizedBox(width: 16.0),
-                          Expanded(
-                            flex: 3,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  cartItem.name,
-                                  style: textStyle,
-                                ),
-                                SizedBox(
-                                  height: 8.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    _buildRoundIconButton(
-                                      icon: Icon(
-                                        Icons.remove,
-                                        size: 18.0,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () {
-                                        cartController.decrementQuantity(index);
-                                      },
-                                    ),
-                                    const SizedBox(width: 8.0),
-                                    Text(
-                                      cartItem.quantity.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 18.0,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8.0),
-                                    _buildRoundIconButton(
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                        size: 18.0,
-                                      ),
-                                      onPressed: () {
-                                        cartController.incrementQuantity(index);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Image.network(cartItem.image),
                             ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              '₵${(cartItem.price * cartItem.quantity)}',
-                              textAlign: TextAlign.right,
-                              style: textStyle,
+                            SizedBox(width: 16.0),
+                            Expanded(
+                              flex: 3,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    cartItem.name,
+                                    style: textStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      _buildRoundIconButton(
+                                        icon: Icon(
+                                          Icons.remove,
+                                          size: 18.0,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          cartController
+                                              .decrementQuantity(index);
+                                        },
+                                      ),
+                                      const SizedBox(width: 8.0),
+                                      Text(
+                                        cartItem.quantity.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 18.0,
+                                          fontFamily: 'Montserrat',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8.0),
+                                      _buildRoundIconButton(
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 18.0,
+                                        ),
+                                        onPressed: () {
+                                          cartController
+                                              .incrementQuantity(index);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                '₵${(cartItem.price * cartItem.quantity)}',
+                                textAlign: TextAlign.right,
+                                style: textStyle,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
       ),
       bottomNavigationBar: BottomAppBar(

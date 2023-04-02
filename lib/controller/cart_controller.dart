@@ -47,10 +47,12 @@ class CartController extends GetxController {
     if (cartItems[index].quantity > 1) {
       cartItems[index].quantity--;
     }
+    update();
   }
 
   void incrementQuantity(int index) {
     cartItems[index].quantity++;
+    update();
   }
 
   // Remove item from cart
