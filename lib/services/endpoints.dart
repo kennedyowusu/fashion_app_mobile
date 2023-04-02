@@ -5,7 +5,7 @@ const String LOGOUT_URL = "${BASE_URL}logout";
 const String CATEGORIES_URL = "${BASE_URL}categories";
 String productsByCategoryUrl(int categoryId) =>
     "${BASE_URL}categories/$categoryId/products";
-
+const String CART_URL = "${BASE_URL}carts/{cartId}/items";
 const String USER_URL = "${BASE_URL}users";
 const String PROFILE_URL = "${BASE_URL}profile";
 const String PRODUCTS_URL = "${BASE_URL}products";
