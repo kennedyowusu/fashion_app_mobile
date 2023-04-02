@@ -54,7 +54,7 @@ class Config {
   static const primaryColor = Color(0xFFF9A826);
 
   Padding buildPopularPadding(
-      {required String text, String otherText = 'View All'}) {
+      {required String text, String otherText = 'View All', Function()? onTap}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
@@ -67,7 +67,11 @@ class Config {
             ),
           ),
           Spacer(),
-          if (otherText.isNotEmpty) Text(otherText),
+          if (otherText.isNotEmpty)
+            GestureDetector(
+              onTap: onTap,
+              child: Text(otherText),
+            ),
         ],
       ),
     );

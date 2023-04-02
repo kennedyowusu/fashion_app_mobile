@@ -67,11 +67,9 @@ class ProductDetailsScreen extends StatelessWidget {
                     backgroundColor: Colors.orange,
                   ),
                   onPressed: () {
-
                     // print(product.name);
 
                     // add the product to the cart
-
                   },
                   child: Text(
                     'Add to Cart',
@@ -119,43 +117,50 @@ class ProductDetailsScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    'GHS${product.price.toString()}',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(),
-              child: Row(
-                children: [
-                  Text(
-                    'In Stock: ',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  decoration: BoxDecoration(),
+                  child: Row(
+                    children: [
+                      Text(
+                        'In Stock: ',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor:
+                            product.stock > 0 ? Colors.orange : Colors.red,
+                        child: Center(
+                          child: Text(
+                            '${product.stock}',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 16.0),
+                  child: Text(
+                    'GHS ${product.price.toString()}',
                     style: TextStyle(
                       fontSize: 18.0,
                     ),
                   ),
-                  CircleAvatar(
-                    radius: 20.0,
-                    backgroundColor:
-                        product.stock > 0 ? Colors.orange : Colors.red,
-                    child: Center(
-                      child: Text(
-                        '${product.stock}',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             Container(
               // height: detailsHeight,

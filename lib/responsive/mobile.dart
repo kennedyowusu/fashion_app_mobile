@@ -1,10 +1,13 @@
 import 'package:fashion_app/helper/config.dart';
+import 'package:fashion_app/views/details/popular_products.dart';
+import 'package:fashion_app/views/details/trending_products.dart';
 import 'package:fashion_app/widgets/build_carousel.dart';
 import 'package:fashion_app/widgets/build_categories.dart';
 import 'package:fashion_app/widgets/build_popular_products.dart';
 import 'package:fashion_app/widgets/build_search.dart';
 import 'package:fashion_app/widgets/build_trending_products.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MobileLayout extends StatelessWidget {
   MobileLayout({Key? key}) : super(key: key);
@@ -37,8 +40,14 @@ class MobileLayout extends StatelessWidget {
         BuildCategories(
           rightPadding: 10,
         ),
+        SizedBox(height: 10),
         config.buildPopularPadding(
           text: 'Popular ',
+          onTap: () {
+            Get.to(
+              () => PopularProductsScreen(),
+            );
+          },
         ),
         SizedBox(height: 10),
         BuildPopularProducts(
@@ -47,7 +56,10 @@ class MobileLayout extends StatelessWidget {
           width: 100.0,
         ),
         config.buildPopularPadding(
-          text: 'New Arrival Products ',
+          text: 'New Arrivals',
+          onTap: () => Get.to(
+            () => TrendingProductsScreen(),
+          ),
         ),
         SizedBox(height: 10),
         BuildTrendingProducts(

@@ -1,5 +1,6 @@
 import 'package:fashion_app/controller/product.dart';
 import 'package:fashion_app/model/products.dart';
+import 'package:fashion_app/views/details/details.dart';
 import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,39 +37,46 @@ class BuildPopularProducts extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: popularProducts.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 140,
-                      margin: const EdgeInsets.only(right: 10),
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                height: height,
-                                width: width,
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  // color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: Colors.grey[300]!,
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(
+                          () => ProductDetailsScreen(
+                            product: popularProducts[index],
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 140,
+                        margin: const EdgeInsets.only(right: 10),
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  height: height,
+                                  width: width,
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Colors.grey[300]!,
+                                    ),
+                                  ),
+                                  child: Image.network(
+                                    popularProducts[index].image,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                child: Image.network(
-                                  popularProducts[index].image,
-                                  fit: BoxFit.cover,
+                                Text(
+                                  popularProducts[index].name,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
                                 ),
-                              ),
-                              // SizedBox(height: 10),
-                              Text(
-                                popularProducts[index].name,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

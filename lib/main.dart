@@ -30,11 +30,13 @@ class FashionApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Fashion Shop',
       debugShowCheckedModeBanner: false,
+      transitionDuration: const Duration(milliseconds: 500),
+      defaultTransition: Transition.fade,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: isUserLoggedIn ? const MainLayout() : const AuthSelector(),
+      home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
     );
   }
 }
