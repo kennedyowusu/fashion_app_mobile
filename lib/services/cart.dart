@@ -64,26 +64,50 @@ class CartService {
     }
   }
 
-  // Future<bool> removeItemFromCart(int cartId) async {
-  //   final url = Uri.parse("$_baseUrl/carts/$cartId");
+  Future<void> updateCartItemQuantity(int itemId, int newQuantity) async {
+    final url = Uri.parse('$CART_URL/$itemId');
 
-  //   try {
-  //     final token = await GetStorage().read('token');
-  //     final response = await http.delete(
-  //       url,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //     );
+    try {
+      final token = await GetStorage().read('token');
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'quantity': newQuantity,
+        }),
+      );
 
-  //     if (response.statusCode == 204) {
-  //       return true;
-  //     } else {
-  //       throw Exception('Failed to remove item from cart');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Failed to remove item from cart: $e');
-  //   }
-  // }
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update cart item quantity');
+      }
+    } catch (e) {
+      throw Exception('Failed to update cart item quantity: $e');
+    }
+  }
+
+  Future<bool> removeItemFromCart(int cartId) async {
+    final url = Uri.parse("$CART_URL/carts/$cartId");
+
+    try {
+      final token = await GetStorage().read('token');
+      final response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 204) {
+        return true;
+      } else {
+        throw Exception('Failed to remove item from cart');
+      }
+    } catch (e) {
+      throw Exception('Failed to remove item from cart: $e');
+    }
+  }
 }

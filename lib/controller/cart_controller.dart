@@ -41,20 +41,6 @@ class CartController extends GetxController {
     }
   }
 
-  Future<void> addItemToCart(String cartId, CartModel cartItem) async {
-    try {
-      final addedItem = await _cartService.addItemToCart(cartId, cartItem);
-      cartItems.add(addedItem);
-      Get.snackbar(
-        'Item added to cart',
-        'Your item has been added to the cart.',
-      );
-      updateTotalAmount();
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to add item to cart: $e');
-    }
-  }
-
   void decrementQuantity(int index) {
     if (cartItems[index].quantity >= 1) {
       cartItems[index].quantity--;
