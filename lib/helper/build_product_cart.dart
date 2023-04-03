@@ -1,8 +1,10 @@
+import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/views/cart/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Stack buildProductCart() {
+  final CartController cartController = Get.put(CartController());
   return Stack(
     children: [
       IconButton(
@@ -27,7 +29,7 @@ Stack buildProductCart() {
             minHeight: 16,
           ),
           child: Text(
-            '0',
+            '${cartController.cartItems.length}',
             style: TextStyle(
               color: Colors.white,
               fontSize: 8,

@@ -28,8 +28,6 @@ class CartService {
 
         debugPrint('Cart items: ${cartItems.length}');
 
-        debugPrint('Cart items: $cartItems');
-
         return cartItems;
       } else {
         throw Exception('Failed to fetch cart items');

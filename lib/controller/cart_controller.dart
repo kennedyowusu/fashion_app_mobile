@@ -1,5 +1,6 @@
 import 'package:fashion_app/model/cart.dart';
 import 'package:fashion_app/services/cart.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -31,6 +32,7 @@ class CartController extends GetxController {
       if (cartItems.isEmpty) {
         Get.snackbar('Empty Cart', 'Your cart is empty.');
       }
+      debugPrint('Cart items from Controller: ${cartItems.length}');
       updateTotalAmount();
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch cart items: $e');

@@ -1,3 +1,4 @@
+import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/controller/product.dart';
 import 'package:fashion_app/helper/build_product_cart.dart';
 import 'package:fashion_app/model/products.dart';
@@ -21,6 +22,7 @@ class ProductListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProductsController productController = Get.put(ProductsController());
+    final CartController cartController = Get.put(CartController());
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -34,7 +36,9 @@ class ProductListScreen extends StatelessWidget {
           color: Colors.black,
         ),
         actions: [
-          buildProductCart(),
+          buildProductCart(
+
+          ),
         ],
       ),
       body: Obx(
