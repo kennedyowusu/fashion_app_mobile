@@ -3,11 +3,13 @@ import 'package:fashion_app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CartScreen extends StatelessWidget {
   CartScreen({Key? key}) : super(key: key);
 
   final CartController cartController = Get.put(CartController());
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -157,14 +159,11 @@ class CartScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Total: ₵${cartController.cartItems.fold(
-                  0,
-                  (previousValue, element) =>
-                      previousValue + (element.price * element.quantity),
-                )}',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
+              Obx(() => Text(
+                    'Total: ₵${cartController.totalAmount.value}',
+                    style:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                  )),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
