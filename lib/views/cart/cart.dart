@@ -14,29 +14,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Cart Items',
-        leadingIcon: FaIcon(
-          FontAwesomeIcons.chevronLeft,
-          color: Colors.black,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white,
-              ),
-              child: Icon(
-                Icons.favorite_border,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      ),
+
       body: Obx(
         () => cartController.isLoading.value
             ? Center(
@@ -57,7 +35,7 @@ class CartScreen extends StatelessWidget {
                       direction: DismissDirection.endToStart,
                       onDismissed: (direction) {
                         // Remove the item from the cart
-                        // cartController.removeCartItem(index);
+                        cartController.removeCartItem(index);
                       },
                       background: Container(
                         color: Colors.red,
