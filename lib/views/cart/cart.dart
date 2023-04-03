@@ -39,16 +39,17 @@ class CartScreen extends StatelessWidget {
       ),
       body: Obx(
         () {
+          final cartItems = cartController.cartItems;
           if (cartController.isLoading.value) {
             return Center(child: CircularProgressIndicator());
-          } else if (cartController.cartItems.isEmpty) {
+          } else if (cartItems.isEmpty) {
             return Center(child: Text('Your cart is empty.'));
           } else {
             return ListView.separated(
-              itemCount: cartController.cartItems.length,
+              itemCount: cartItems.length,
               separatorBuilder: (context, index) => Divider(),
               itemBuilder: (context, index) {
-                final cartItem = cartController.cartItems[index];
+                final cartItem = cartItems[index];
                 TextStyle textStyle = TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
