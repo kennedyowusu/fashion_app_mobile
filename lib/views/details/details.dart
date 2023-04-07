@@ -67,7 +67,11 @@ class ProductDetailsScreen extends StatelessWidget {
                     backgroundColor: Colors.orange,
                   ),
                   onPressed: () {
-                    // print(product.name);
+                    // pass the product data to the cart
+
+                    debugPrint(
+                      "Added to Cart: ${product.name} - ${product.price} - ${product.image} - ${product.stock}",
+                    );
 
                     // add the product to the cart
                   },
@@ -82,7 +86,9 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    product.stock = product.stock - 1;
+                  },
                   child: Text(
                     'Buy Now',
                     style: TextStyle(),
@@ -154,7 +160,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 16.0),
                   child: Text(
-                    'GHS ${product.price.toString()}',
+                    '₵${product.price.toString()}',
                     style: TextStyle(
                       fontSize: 18.0,
                     ),
