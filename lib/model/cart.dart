@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-CartResponse cartModelFromJson(String str) => CartResponse.fromJson(json.decode(str));
+CartResponse cartModelFromJson(String str) =>
+    CartResponse.fromJson(json.decode(str));
 
 String cartModelToJson(CartResponse data) => json.encode(data.toJson());
 
@@ -30,6 +31,7 @@ class CartModel {
     required this.name,
     required this.image,
     required this.price,
+    required this.totalPrice,
     required this.quantity,
     required this.userId,
     required this.productId,
@@ -39,9 +41,33 @@ class CartModel {
   String name;
   String image;
   int price;
+  int totalPrice;
   int quantity;
   int userId;
   int productId;
+
+  // Define copyWith method
+  CartModel copyWith({
+    int? id,
+    String? name,
+    String? image,
+    int? price,
+    int? quantity,
+    int? userId,
+    int? productId,
+    int? totalPrice,
+  }) {
+    return CartModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      userId: userId ?? this.userId,
+      productId: productId ?? this.productId,
+      totalPrice: totalPrice ?? this.totalPrice,
+    );
+  }
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         id: json["id"],
@@ -51,6 +77,7 @@ class CartModel {
         quantity: json["quantity"],
         userId: json["user_id"],
         productId: json["product_id"],
+        totalPrice: json["total_price"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +88,6 @@ class CartModel {
         "quantity": quantity,
         "user_id": userId,
         "product_id": productId,
+        "total_price": totalPrice,
       };
 }

@@ -1,12 +1,22 @@
-import 'package:fashion_app/model/products.dart';
-import 'package:fashion_app/widgets/appbar.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fashion_app/views/cart/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+
+import 'package:fashion_app/controller/cart_controller.dart';
+import 'package:fashion_app/model/products.dart';
+import 'package:fashion_app/widgets/appbar.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final Product product;
 
-  const ProductDetailsScreen({super.key, required this.product});
+  ProductDetailsScreen({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +77,17 @@ class ProductDetailsScreen extends StatelessWidget {
                     backgroundColor: Colors.orange,
                   ),
                   onPressed: () {
-                    // pass the product data to the cart
-
-                    debugPrint(
-                      "Added to Cart: ${product.name} - ${product.price} - ${product.image} - ${product.stock}",
+                    cartController.addToCart(
+                      product,
+                      product.id,
                     );
 
-                    // add the product to the cart
+                    // pass the product to the cart screen and add it to the cart
+                    Get.to(
+                      () => CartScreen(
+                        product: product,
+                      ),
+                    );
                   },
                   child: Text(
                     'Add to Cart',

@@ -38,53 +38,26 @@ class CartService {
     }
   }
 
-  Future<CartModel> addItemToCart(String cartId, CartModel cartItem) async {
+  Future<void> saveCartItems(List<CartModel> items) async {
     final url = Uri.parse(CART_URL);
 
     try {
       final token = await GetStorage().read('token');
+      getCartItems();
       final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(cartItem.toJson()),
-      );
-
-      if (response.statusCode == 201) {
-        final jsonResponse = jsonDecode(response.body);
-        CartModel cartResponse = CartModel.fromJson(jsonResponse["data"]);
-        return cartResponse;
-      } else {
-        throw Exception('Failed to add item to cart');
-      }
-    } catch (e) {
-      throw Exception('Failed to add item to cart: $e');
-    }
-  }
-
-  Future<void> updateCartItemQuantity(int itemId, int newQuantity) async {
-    final url = Uri.parse('$CART_URL/$itemId');
-
-    try {
-      final token = await GetStorage().read('token');
-      final response = await http.put(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode({
-          'quantity': newQuantity,
-        }),
+        body: jsonEncode(items.map((item) => item.toJson()).toList()),
       );
 
       if (response.statusCode != 200) {
-        throw Exception('Failed to update cart item quantity');
+        throw Exception('Failed to save cart items');
       }
     } catch (e) {
-      throw Exception('Failed to update cart item quantity: $e');
+      throw Exception('Failed to save cart items: $e');
     }
   }
 

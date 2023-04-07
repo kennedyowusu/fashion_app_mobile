@@ -1,4 +1,5 @@
 import 'package:fashion_app/model/cart.dart';
+import 'package:fashion_app/model/products.dart';
 import 'package:fashion_app/services/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,6 +39,47 @@ class CartController extends GetxController {
       Get.snackbar('Error', 'Failed to fetch cart items: $e');
     } finally {
       isLoading(false);
+    }
+  }
+
+  void addToCart(Product product, int quantity) {
+    try {
+      final existingItemIndex =
+          cartItems.indexWhere((item) => item.productId == product.id);
+      if (existingItemIndex != -1) {
+        final existingItem = cartItems[existingItemIndex];
+        final updatedItem = existingItem.copyWith(
+          quantity: existingItem.quantity + quantity,
+          totalPrice:
+              existingItem.totalPrice + (int.parse(product.price) * quantity),
+        );
+        cartItems[existingItemIndex] = updatedItem;
+      } else {
+        final newItem = CartModel(
+          id: DateTime.now().millisecondsSinceEpoch,
+          name: product.name,
+          image: product.image,
+          price: int.tryParse(product.price) ?? 0,
+          quantity: quantity,
+          userId: 1,
+          productId: product.id,
+          totalPrice: (product.price * quantity),
+        );
+        cartItems.add(newItem);
+      }
+      // Update total amount
+      final newTotalAmount = cartItems.fold(
+        0.0,
+        (total, item) => total + item.totalPrice,
+      );
+      totalAmount(newTotalAmount);
+      // Save total amount to local storage
+      box.write('totalAmount', newTotalAmount);
+      // Save cart items to server
+      _cartService.saveCartItems(cartItems.toList());
+      debugPrint('Cart items from Cart Controller: ${cartItems.length}');
+    } catch (e) {
+      print(e);
     }
   }
 
