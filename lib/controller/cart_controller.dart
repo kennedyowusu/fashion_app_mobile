@@ -50,8 +50,8 @@ class CartController extends GetxController {
         final existingItem = cartItems[existingItemIndex];
         final updatedItem = existingItem.copyWith(
           quantity: existingItem.quantity + quantity,
-          totalPrice:
-              existingItem.totalPrice + (int.parse(product.price) * quantity),
+          totalPrice: existingItem.totalPrice +
+              (double.parse(product.price as String) * quantity),
         );
         cartItems[existingItemIndex] = updatedItem;
       } else {
@@ -59,11 +59,11 @@ class CartController extends GetxController {
           id: DateTime.now().millisecondsSinceEpoch,
           name: product.name,
           image: product.image,
-          price: int.tryParse(product.price) ?? 0,
+          price: product.price,
           quantity: quantity,
           userId: 1,
           productId: product.id,
-          totalPrice: (product.price * quantity),
+          totalPrice: product.price * quantity,
         );
         cartItems.add(newItem);
       }
@@ -101,7 +101,7 @@ class CartController extends GetxController {
 
   void updateTotalAmount() {
     final newTotalAmount = cartItems.fold(
-      0,
+      0.00,
       (previousValue, element) =>
           previousValue + (element.price * element.quantity),
     );

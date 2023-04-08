@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final cartModel = cartModelFromJson(jsonString);
-
 import 'dart:convert';
 
 CartResponse cartModelFromJson(String str) =>
@@ -40,8 +36,8 @@ class CartModel {
   int id;
   String name;
   String image;
-  int price;
-  int totalPrice;
+  double price;
+  double totalPrice;
   int quantity;
   int userId;
   int productId;
@@ -51,11 +47,11 @@ class CartModel {
     int? id,
     String? name,
     String? image,
-    int? price,
+    double? price,
     int? quantity,
     int? userId,
     int? productId,
-    int? totalPrice,
+    double? totalPrice,
   }) {
     return CartModel(
       id: id ?? this.id,
@@ -69,16 +65,20 @@ class CartModel {
     );
   }
 
-  factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
-        id: json["id"],
-        name: json["name"],
-        image: json["image"],
-        price: json["price"],
-        quantity: json["quantity"],
-        userId: json["user_id"],
-        productId: json["product_id"],
-        totalPrice: json["total_price"],
-      );
+  factory CartModel.fromJson(Map<String, dynamic> json) {
+    return CartModel(
+      id: json["id"],
+      name: json["name"],
+      image: json["image"],
+      price: json["price"].toDouble(),
+      quantity: json["quantity"] is int
+          ? json["quantity"]
+          : int.parse(json["quantity"]),
+      userId: json["user_id"],
+      productId: json["product_id"],
+      totalPrice: json["total_price"].toDouble(),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

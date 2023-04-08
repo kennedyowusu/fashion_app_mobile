@@ -140,7 +140,7 @@ class CartScreen extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            '₵${(cartItem.price * cartItem.quantity)}',
+                            '₵${(cartItem.price * cartItem.quantity).toStringAsFixed(0)}',
                             textAlign: TextAlign.right,
                             style: textStyle,
                           ),
@@ -162,7 +162,7 @@ class CartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Obx(() => Text(
-                    'Total: ₵${cartController.totalAmount.value}',
+                    'Total: ₵${cartController.totalAmount.value.toStringAsFixed(2)}',
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   )),
