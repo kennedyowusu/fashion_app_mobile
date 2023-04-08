@@ -70,28 +70,71 @@ class ProductDetailsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    maximumSize: Size(100, 50),
-                    backgroundColor: Colors.orange,
-                  ),
-                  onPressed: () {
-                    cartController.addToCart(
-                      product,
-                      product.id,
-                    );
-
-                    // pass the product to the cart screen and add it to the cart
-                    Get.to(
-                      () => CartScreen(
-                        product: product,
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Add to Cart',
-                    style: TextStyle(color: Colors.white),
+                child: Obx(
+                  () => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: !cartController.updatingCart.value &&
+                              !cartController.cartItems
+                                  .any((item) => item.id == product.id) &&
+                              cartController.addingToCartError.value.isEmpty
+                          ? Colors.white
+                          : Colors.grey,
+                      maximumSize: Size(100, 50),
+                      // Disable button when cart is being updated
+                      // or when the item is already in the cart
+                      // or when there is an error adding to the cart
+                      // Use the `onPressed` property to determine if the button is enabled or disabled
+                      // based on the conditions below
+                      backgroundColor: !cartController.updatingCart.value &&
+                              !cartController.cartItems
+                                  .any((item) => item.id == product.id) &&
+                              cartController.addingToCartError.value.isEmpty
+                          ? Colors.orange
+                          : Colors.grey,
+                      textStyle: TextStyle(fontSize: 16),
+                    ),
+                    onPressed: !cartController.updatingCart.value &&
+                            !cartController.cartItems
+                                .any((item) => item.id == product.id) &&
+                            cartController.addingToCartError.value.isEmpty
+                        ? () async {
+                            // Set updatingCart to true to show loading state
+                            cartController.updatingCart.value = true;
+                            try {
+                              // Add item to cart
+                              cartController.addToCart(product, 1);
+                              // Navigate to cart screen
+                              Get.to(() => CartScreen(product: product));
+                            } catch (e) {
+                              // Set addingToCartError to show error message
+                              cartController.addingToCartError.value =
+                                  e.toString();
+                            } finally {
+                              // Set updatingCart to false to hide loading state
+                              cartController.updatingCart.value = false;
+                            }
+                          }
+                        : null, // Set `onPressed` to null to disable the button
+                    child: Obx(
+                      () {
+                        if (cartController.updatingCart.value) {
+                          // Show loading state if cart is being updated
+                          return CircularProgressIndicator();
+                        } else if (cartController.cartItems
+                            .any((item) => item.id == product.id)) {
+                          // Show disabled button if item is already in the cart
+                          return Text(
+                            'Already in cart',
+                            style: TextStyle(color: Colors.grey),
+                          );
+                        } else {
+                          return Text(
+                            'Add to Cart',
+                            style: TextStyle(color: Colors.white),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),
