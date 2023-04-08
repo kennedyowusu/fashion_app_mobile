@@ -1,6 +1,7 @@
 import 'package:fashion_app/constants/images.dart';
 import 'package:fashion_app/controller/category_products.dart';
 import 'package:fashion_app/widgets/appbar.dart';
+import 'package:fashion_app/widgets/empty_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -69,27 +70,8 @@ class ProductsByCategoryScreen extends StatelessWidget {
             final isLoading = productsByCategoryController.isLoading.value;
 
             if (products.isEmpty && !isLoading) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      ProjectImages().no_product,
-                      width: 300,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'This Category has no products yet.'.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
+              return EmptyScreen(
+                message: 'No products found for this category',
               );
             } else {
               return Stack(
