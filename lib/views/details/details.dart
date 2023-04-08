@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fashion_app/views/cart/cart.dart';
+import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -80,11 +81,6 @@ class ProductDetailsScreen extends StatelessWidget {
                           ? Colors.white
                           : Colors.grey,
                       maximumSize: Size(100, 50),
-                      // Disable button when cart is being updated
-                      // or when the item is already in the cart
-                      // or when there is an error adding to the cart
-                      // Use the `onPressed` property to determine if the button is enabled or disabled
-                      // based on the conditions below
                       backgroundColor: !cartController.updatingCart.value &&
                               !cartController.cartItems
                                   .any((item) => item.id == product.id) &&
@@ -93,6 +89,11 @@ class ProductDetailsScreen extends StatelessWidget {
                           : Colors.grey,
                       textStyle: TextStyle(fontSize: 16),
                     ),
+                    // Disable button when cart is being updated
+                    // or when the item is already in the cart
+                    // or when there is an error adding to the cart
+                    // Use the `onPressed` property to determine if the button is enabled or disabled
+                    // based on the conditions below
                     onPressed: !cartController.updatingCart.value &&
                             !cartController.cartItems
                                 .any((item) => item.id == product.id) &&
@@ -119,7 +120,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       () {
                         if (cartController.updatingCart.value) {
                           // Show loading state if cart is being updated
-                          return CircularProgressIndicator();
+                          return Loader();
                         } else if (cartController.cartItems
                             .any((item) => item.id == product.id)) {
                           // Show disabled button if item is already in the cart

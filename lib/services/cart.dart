@@ -43,7 +43,7 @@ class CartService {
 
     try {
       final token = await GetStorage().read('token');
-      getCartItems();
+      // getCartItems();
       final response = await http.post(
         url,
         headers: {
@@ -56,7 +56,9 @@ class CartService {
       if (response.statusCode != 200) {
         throw Exception('Failed to save cart items');
       }
+      debugPrint('Response body: ${response.body}');
     } catch (e) {
+      debugPrint('Failed to save cart items: $e');
       throw Exception('Failed to save cart items: $e');
     }
   }

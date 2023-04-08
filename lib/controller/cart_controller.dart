@@ -14,6 +14,10 @@ class CartController extends GetxController {
   final RxDouble totalAmount = 0.0.obs;
   final box = GetStorage();
 
+  final cartItemsCount = 0.obs;
+  final updatingCart = false.obs;
+  final addingToCartError = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -42,8 +46,11 @@ class CartController extends GetxController {
     }
   }
 
-  void addToCart(Product product, int quantity) {
+  void addToCart(Product product, int quantity) async {
     try {
+      updatingCart(true);
+      addingToCartError('');
+
       final existingItemIndex =
           cartItems.indexWhere((item) => item.productId == product.id);
       if (existingItemIndex != -1) {
@@ -66,19 +73,25 @@ class CartController extends GetxController {
         );
         cartItems.add(newItem);
       }
+
       // Update total amount
       final newTotalAmount = cartItems.fold(
         0.0,
         (total, item) => total + item.totalPrice,
       );
       totalAmount(newTotalAmount);
+
       // Save total amount to local storage
       box.write('totalAmount', newTotalAmount);
+
       // Save cart items to server
-      _cartService.saveCartItems(cartItems.toList());
+      await _cartService.saveCartItems(cartItems.toList());
       debugPrint('Cart items from Cart Controller: ${cartItems.length}');
     } catch (e) {
-      print(e);
+      addingToCartError('Failed to add item to cart');
+      debugPrint('Error adding to cart: $e');
+    } finally {
+      updatingCart(false);
     }
   }
 
