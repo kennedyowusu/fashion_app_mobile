@@ -50,8 +50,7 @@ class CartController extends GetxController {
         final existingItem = cartItems[existingItemIndex];
         final updatedItem = existingItem.copyWith(
           quantity: existingItem.quantity + quantity,
-          totalPrice: existingItem.totalPrice +
-              (double.parse(product.price as String) * quantity),
+          totalPrice: existingItem.totalPrice + (product.price * quantity),
         );
         cartItems[existingItemIndex] = updatedItem;
       } else {
