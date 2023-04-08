@@ -2,6 +2,7 @@ import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/model/products.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/empty_screen.dart';
+import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class CartScreen extends StatelessWidget {
         () {
           final cartItems = cartController.cartItems;
           if (cartController.isLoading.value) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Loader());
           } else if (cartItems.isEmpty) {
             return EmptyScreen(
               message: 'Your cart is Empty',
