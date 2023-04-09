@@ -1,4 +1,3 @@
-import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/views/auth/auth.dart';
 import 'package:flutter/material.dart';

@@ -53,7 +53,7 @@ class CartService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(items.map((item) => item.toJson()).toList()),
+        body: jsonEncode(items[0].toJson()),
       );
 
       if (response.statusCode != 200) {
