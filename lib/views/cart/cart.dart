@@ -67,6 +67,7 @@ class CartScreen extends StatelessWidget {
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) async {
                     await cartController.removeItemFromCart(cartItem.id);
+                    cartController.cartItems.removeAt(index);
                     CustomSnackbar.show(
                       'Success',
                       '${cartItem.name} has been removed from the cart',

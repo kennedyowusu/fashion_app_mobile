@@ -91,7 +91,7 @@ class CartService {
         // convert response body to JSON object
         final json = jsonDecode(response.body);
         // show success message in snackbar
-        CustomSnackbar.show('Success', json['message']);
+        // CustomSnackbar.show('Success', json['message']);
         return true;
       } else {
         CustomSnackbar.show('Error', 'Failed to remove item from cart');
