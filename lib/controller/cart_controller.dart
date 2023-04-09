@@ -46,6 +46,14 @@ class CartController extends GetxController {
     }
   }
 
+  Future<void> loadCart() async {
+    isLoading.value = true;
+    final newCartItems = await _cartService.getCartItems();
+    cartItems.clear(); // clear the existing items
+    cartItems.addAll(newCartItems); // add the new items
+    isLoading.value = false;
+  }
+
   void addToCart(Product product, int quantity) async {
     try {
       updatingCart(true);

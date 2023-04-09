@@ -53,113 +53,118 @@ class CartScreen extends StatelessWidget {
               message: 'Your cart is Empty',
             );
           } else {
-            return ListView.separated(
-              itemCount: cartItems.length,
-              separatorBuilder: (context, index) => Divider(),
-              itemBuilder: (context, index) {
-                final cartItem = cartItems[index];
-                TextStyle textStyle = TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                );
-                return Dismissible(
-                  key: Key(cartItem.id.toString()),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (direction) async {
-                    await cartController.removeItemFromCart(cartItem.id);
-                    cartController.cartItems.removeAt(index);
-                    CustomSnackbar.show(
-                      'Success',
-                      '${cartItem.name} has been removed from the cart',
-                    );
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Icon(Icons.delete, color: Colors.white),
+            return RefreshIndicator(
+              onRefresh: () async {
+                await cartController.loadCart();
+              },
+              child: ListView.separated(
+                itemCount: cartItems.length,
+                separatorBuilder: (context, index) => Divider(),
+                itemBuilder: (context, index) {
+                  final cartItem = cartItems[index];
+                  TextStyle textStyle = TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  );
+                  return Dismissible(
+                    key: Key(cartItem.id.toString()),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) async {
+                      await cartController.removeItemFromCart(cartItem.id);
+                      cartController.cartItems.removeAt(index);
+                      CustomSnackbar.show(
+                        'Success',
+                        '${cartItem.name} has been removed from the cart',
+                      );
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Icon(Icons.delete, color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        // Expanded(
-                        //   flex: 2,
-                        //   child: Image.network(cartItem.image),
-                        // ),
-                        SizedBox(width: 16.0),
-                        Expanded(
-                          flex: 3,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                cartItem.name,
-                                style: textStyle,
-                              ),
-                              SizedBox(
-                                height: 8.0,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  _buildRoundIconButton(
-                                    icon: Icon(
-                                      Icons.remove,
-                                      size: 18.0,
-                                      color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 8.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          // Expanded(
+                          //   flex: 2,
+                          //   child: Image.network(cartItem.image),
+                          // ),
+                          SizedBox(width: 16.0),
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  cartItem.name,
+                                  style: textStyle,
+                                ),
+                                SizedBox(
+                                  height: 8.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    _buildRoundIconButton(
+                                      icon: Icon(
+                                        Icons.remove,
+                                        size: 18.0,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {
+                                        cartController.decrementQuantity(index);
+                                      },
                                     ),
-                                    onPressed: () {
-                                      cartController.decrementQuantity(index);
-                                    },
-                                  ),
-                                  const SizedBox(width: 8.0),
-                                  Text(
-                                    cartItem.quantity.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 18.0,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.bold,
+                                    const SizedBox(width: 8.0),
+                                    Text(
+                                      cartItem.quantity.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 8.0),
-                                  _buildRoundIconButton(
-                                    icon: Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                      size: 18.0,
+                                    const SizedBox(width: 8.0),
+                                    _buildRoundIconButton(
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                        size: 18.0,
+                                      ),
+                                      onPressed: () {
+                                        cartController.incrementQuantity(index);
+                                      },
                                     ),
-                                    onPressed: () {
-                                      cartController.incrementQuantity(index);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            '₵${(cartItem.price * cartItem.quantity).toStringAsFixed(0)}',
-                            textAlign: TextAlign.right,
-                            style: textStyle,
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              '₵${(cartItem.price * cartItem.quantity).toStringAsFixed(0)}',
+                              textAlign: TextAlign.right,
+                              style: textStyle,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           }
         },
