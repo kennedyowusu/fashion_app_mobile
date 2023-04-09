@@ -17,7 +17,9 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartItems = cartController.cartItems;
     return Scaffold(
+      backgroundColor: cartItems.isEmpty ? Colors.white : Colors.grey[200],
       appBar: CustomAppBar(
         title: 'Cart Items',
         leadingIcon: FaIcon(
@@ -43,7 +45,6 @@ class CartScreen extends StatelessWidget {
       ),
       body: Obx(
         () {
-          final cartItems = cartController.cartItems;
           if (cartController.isLoading.value) {
             return Center(child: Loader());
           } else if (cartItems.isEmpty) {
