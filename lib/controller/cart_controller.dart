@@ -100,7 +100,8 @@ class CartController extends GetxController {
       cartItems[index].quantity--;
       updateTotalAmount();
     } else {
-      removeCartItem(index);
+      // removeCartItem(index);
+      removeItemFromCart(cartItems[index].id);
     }
     update();
   }
@@ -121,12 +122,53 @@ class CartController extends GetxController {
     box.write('totalAmount', newTotalAmount);
   }
 
-  void removeCartItem(int index) {
-    final removedItem = cartItems.removeAt(index);
-    Get.snackbar(
-      'Item removed from cart',
-      '${removedItem.name} has been removed from the cart.',
-    );
-    updateTotalAmount();
+  // void removeCartItem(int index) {
+  //   final removedItem = cartItems.removeAt(index);
+  //   Get.snackbar(
+  //     'Item removed from cart',
+  //     '${removedItem.name} has been removed from the cart.',
+  //   );
+  //   updateTotalAmount();
+  // }
+
+  // Future<void> removeCartItem(int index) async {
+  //   try {
+  //     updatingCart(true);
+  //     addingToCartError('');
+
+  //     final removedItem = cartItems.removeAt(index);
+  //     Get.snackbar(
+  //       'Item removed from cart',
+  //       '${removedItem.name} has been removed from the cart.',
+  //     );
+  //     updateTotalAmount();
+
+  //     // Save cart items to server
+  //     await _cartService.saveCartItems(cartItems.toList());
+  //   } catch (e) {
+  //     addingToCartError('Failed to remove item from cart');
+  //     debugPrint('Error removing item from cart: $e');
+  //   } finally {
+  //     updatingCart(false);
+  //   }
+  // }
+
+  Future<bool> removeItemFromCart(int itemId) async {
+    try {
+      final bool success = await _cartService.removeItemFromCart(itemId);
+      if (success) {
+        // Update cart items list
+        update();
+      }
+      return success;
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to remove item from cart: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      debugPrint('Error removing item from cart: $e');
+      return false;
+    }
   }
 }

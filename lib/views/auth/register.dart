@@ -1,7 +1,7 @@
 import 'package:fashion_app/controller/authentication.dart';
 import 'package:fashion_app/controller/obscure_password.dart';
 import 'package:fashion_app/helper/config.dart';
-import 'package:fashion_app/widgets/Button.dart';
+import 'package:fashion_app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,7 +65,7 @@ class RegisterView extends StatelessWidget {
               }
             },
           ),
-           Config.spaceBig,
+          Config.spaceBig,
         ],
       ),
     );

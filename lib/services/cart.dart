@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fashion_app/model/cart.dart';
 import 'package:fashion_app/services/endpoints.dart';
+import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -43,7 +44,7 @@ class CartService {
 
     try {
       final token = await GetStorage().read('token');
-      // getCartItems();
+      getCartItems();
       final response = await http.post(
         url,
         headers: {
@@ -64,19 +65,31 @@ class CartService {
   }
 
   Future<bool> removeItemFromCart(int cartId) async {
-    final url = Uri.parse("$CART_URL/carts/$cartId");
+    final url = Uri.parse("$CART_URL/$cartId");
+
+    debugPrint('URL: $url $cartId');
 
     try {
       final token = await GetStorage().read('token');
+
+      // make HTTP request to delete cart item
       final response = await http.delete(
         url,
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
       );
 
-      if (response.statusCode == 204) {
+      debugPrint('Response body: ${response.body}');
+
+      // check if request was successful
+      if (response.statusCode == 200) {
+        // convert response body to JSON object
+        final json = jsonDecode(response.body);
+        // show success message in snackbar
+        CustomSnackbar.show(json['message']);
         return true;
       } else {
         throw Exception('Failed to remove item from cart');

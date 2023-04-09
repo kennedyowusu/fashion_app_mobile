@@ -63,9 +63,8 @@ class CartScreen extends StatelessWidget {
                 return Dismissible(
                   key: Key(cartItem.id.toString()),
                   direction: DismissDirection.endToStart,
-                  onDismissed: (direction) {
-                    // Remove the item from the cart
-                    cartController.removeCartItem(index);
+                  onDismissed: (direction) async {
+                    await cartController.removeItemFromCart(cartItem.id);
                   },
                   background: Container(
                     color: Colors.red,
