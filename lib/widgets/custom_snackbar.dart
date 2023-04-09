@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomSnackbar {
-  static void show(String message) {
+  static void show(String title, String message, {Color color = Colors.black}) {
     Get.snackbar(
-      'Success',
+      title,
       message,
       messageText: Text(
         message,

@@ -16,6 +16,7 @@ class CartService {
       final response = await http.get(
         url,
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
@@ -48,6 +49,7 @@ class CartService {
       final response = await http.post(
         url,
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
@@ -89,12 +91,14 @@ class CartService {
         // convert response body to JSON object
         final json = jsonDecode(response.body);
         // show success message in snackbar
-        CustomSnackbar.show(json['message']);
+        CustomSnackbar.show('Success', json['message']);
         return true;
       } else {
+        CustomSnackbar.show('Error', 'Failed to remove item from cart');
         throw Exception('Failed to remove item from cart');
       }
     } catch (e) {
+      CustomSnackbar.show('Error', 'Failed to remove item from cart');
       throw Exception('Failed to remove item from cart: $e');
     }
   }

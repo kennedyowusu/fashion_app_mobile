@@ -1,6 +1,7 @@
 import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/model/products.dart';
 import 'package:fashion_app/widgets/appbar.dart';
+import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:fashion_app/widgets/empty_screen.dart';
 import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,10 @@ class CartScreen extends StatelessWidget {
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) async {
                     await cartController.removeItemFromCart(cartItem.id);
+                    CustomSnackbar.show(
+                      'Success',
+                      '${cartItem.name} has been removed from the cart',
+                    );
                   },
                   background: Container(
                     color: Colors.red,
