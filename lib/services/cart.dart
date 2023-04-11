@@ -13,6 +13,14 @@ class CartService {
 
     try {
       final token = await GetStorage().read('token');
+      final currentUserId = await GetStorage().read('currentUserId');
+
+      if (currentUserId == null) {
+        throw Exception('User ID not found');
+      }
+
+      final userId = int.parse(currentUserId['id']);
+
       final response = await http.get(
         url,
         headers: {
@@ -25,8 +33,10 @@ class CartService {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body)['data'] as List<dynamic>;
 
-        List<CartModel> cartItems =
-            jsonResponse.map((item) => CartModel.fromJson(item)).toList();
+        final cartItems = jsonResponse
+            .where((item) => item['user_id'] == userId)
+            .map((item) => CartModel.fromJson(item))
+            .toList();
 
         debugPrint('Cart items: ${cartItems.length}');
 
@@ -40,12 +50,19 @@ class CartService {
     }
   }
 
-  Future<void> saveCartItems(List<CartModel> items) async {
+  Future<void> saveCartItem(CartModel item) async {
     final url = Uri.parse(CART_URL);
 
     try {
       final token = await GetStorage().read('token');
-      getCartItems();
+      final currentUserId = await GetStorage().read('currentUserId');
+
+      if (currentUserId == null) {
+        throw Exception('User ID not found');
+      }
+
+      final userId = int.parse(currentUserId['id']);
+
       final response = await http.post(
         url,
         headers: {
@@ -53,16 +70,16 @@ class CartService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(items[0].toJson()),
+        body: jsonEncode(item.copyWith(userId: userId).toJson()),
       );
 
       if (response.statusCode != 200) {
-        throw Exception('Failed to save cart items');
+        throw Exception('Failed to save cart item');
       }
       debugPrint('Response body: ${response.body}');
     } catch (e) {
-      debugPrint('Failed to save cart items: $e');
-      throw Exception('Failed to save cart items: $e');
+      debugPrint('Failed to save cart item: $e');
+      throw Exception('Failed to save cart item: $e');
     }
   }
 
@@ -73,6 +90,13 @@ class CartService {
 
     try {
       final token = await GetStorage().read('token');
+      final currentUserId = await GetStorage().read('currentUserId');
+
+      if (currentUserId == null) {
+        throw Exception('User ID not found');
+      }
+
+      final userId = int.parse(currentUserId['id']);
 
       // make HTTP request to delete cart item
       final response = await http.delete(
@@ -90,9 +114,15 @@ class CartService {
       if (response.statusCode == 200) {
         // convert response body to JSON object
         final json = jsonDecode(response.body);
-        // show success message in snackbar
-        // CustomSnackbar.show('Success', json['message']);
-        return true;
+
+        if (json['data']['user_id'] == userId) {
+          // show success message in snackbar
+          // CustomSnackbar.show('Success', json['message']);
+          return true;
+        } else {
+          CustomSnackbar.show('Error', 'Failed to remove item from cart');
+          throw Exception('Failed to remove item from cart');
+        }
       } else {
         CustomSnackbar.show('Error', 'Failed to remove item from cart');
         throw Exception('Failed to remove item from cart');

@@ -17,6 +17,7 @@ void main() async {
   final box = GetStorage();
   // box.remove('token');
   final token = box.read('token') ?? '';
+  box.read('currentUserId');
   runApp(FashionApp(isUserLoggedIn: token.isNotEmpty));
 }
 

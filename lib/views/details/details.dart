@@ -89,11 +89,6 @@ class ProductDetailsScreen extends StatelessWidget {
                           : Colors.grey,
                       textStyle: TextStyle(fontSize: 16),
                     ),
-                    // Disable button when cart is being updated
-                    // or when the item is already in the cart
-                    // or when there is an error adding to the cart
-                    // Use the `onPressed` property to determine if the button is enabled or disabled
-                    // based on the conditions below
                     onPressed: !cartController.updatingCart.value &&
                             !cartController.cartItems
                                 .any((item) => item.id == product.id) &&
@@ -103,7 +98,8 @@ class ProductDetailsScreen extends StatelessWidget {
                             cartController.updatingCart.value = true;
                             try {
                               // Add item to cart
-                              cartController.addToCart(product, 1);
+                              // cartController.addToCart();
+                              cartController.addToCart(product);
                               // Navigate to cart screen
                               Get.to(() => CartScreen(product: product));
                             } catch (e) {

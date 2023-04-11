@@ -13,12 +13,14 @@ class AuthenticationController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final isLoading = false.obs;
   late final RxString token = ''.obs;
+  late final RxString currentUserId = ''.obs;
   final GetStorage box = GetStorage();
 
   @override
   void onInit() {
     super.onInit();
     token.value = box.read('token') ?? '';
+    currentUserId.value = box.read('currentUserId') ?? '';
   }
 
 // Register a new user with the server
@@ -55,12 +57,15 @@ class AuthenticationController extends GetxController {
         // Registration successful
         isLoading(false);
 
-        // Parse the response body and extract the access token
+        // Parse the response body and extract the access token and user id
         final responseData = json.decode(response.body);
-        token.value = responseData['access_token'];
 
-        // Save the access token to the local storage
+        token.value = responseData['access_token'].toString();
+        currentUserId.value = responseData['user_id'].toString();
+
+        // Save the access token and user id to the local storage
         box.write('token', token.value);
+        box.write('currentUserId', currentUserId.value);
 
         // Navigate to the main layout
         Get.offAll(() => const MainLayout());
@@ -115,10 +120,15 @@ class AuthenticationController extends GetxController {
       if (response.statusCode == 200) {
         isLoading(false);
 
+        // Parse the response body and extract the access token and user id
         final responseData = json.decode(response.body);
 
-        token.value = responseData['access_token'];
+        token.value = responseData['access_token'].toString();
+        currentUserId.value = responseData['user_id'].toString();
+
+        // Save the access token and user id to the local storage
         box.write('token', token.value);
+        box.write('currentUserId', currentUserId.value);
 
         Get.offAll(() => const MainLayout());
 
@@ -152,9 +162,12 @@ class AuthenticationController extends GetxController {
       return false;
     } catch (e) {
       isLoading(false);
+      debugPrint(
+        'An error occurred while logging in the user $e',
+      );
       Get.snackbar(
         'Error',
-        'An error occurred',
+        'An error occurred while logging in the user $e',
         snackPosition: SnackPosition.BOTTOM,
       );
       return false;
@@ -170,8 +183,11 @@ class AuthenticationController extends GetxController {
         headers: HEADERS,
       );
       if (response.statusCode == 200) {
+        // Clear the local storage
         token.value = '';
+        currentUserId.value = '';
         box.remove('token');
+        box.remove('currentUserId');
         await Get.offAll(() => const AuthSelector());
       } else {
         debugPrint('${json.decode(response.body)['message']}');
@@ -193,5 +209,4 @@ class AuthenticationController extends GetxController {
       Get.snackbar('Error', 'Logout Failed');
     }
   }
-
 }

@@ -54,32 +54,22 @@ class CartController extends GetxController {
     isLoading.value = false;
   }
 
-  void addToCart(Product product, int quantity) async {
+  void addToCart(Product item) async {
     try {
       updatingCart(true);
       addingToCartError('');
 
       final existingItemIndex =
-          cartItems.indexWhere((item) => item.productId == product.id);
+          cartItems.indexWhere((x) => x.productId == item.id);
       if (existingItemIndex != -1) {
         final existingItem = cartItems[existingItemIndex];
         final updatedItem = existingItem.copyWith(
-          quantity: existingItem.quantity + quantity,
-          totalPrice: existingItem.totalPrice + (product.price * quantity),
+          quantity: existingItem.quantity + 1,
+          totalPrice: existingItem.totalPrice + item.price,
         );
         cartItems[existingItemIndex] = updatedItem;
       } else {
-        final newItem = CartModel(
-          id: DateTime.now().millisecondsSinceEpoch,
-          name: product.name,
-          image: product.image,
-          price: product.price,
-          quantity: quantity,
-          userId: 1,
-          productId: product.id,
-          totalPrice: product.price * quantity,
-        );
-        cartItems.add(newItem);
+        cartItems.add(item as CartModel);
       }
 
       // Update total amount
@@ -92,8 +82,8 @@ class CartController extends GetxController {
       // Save total amount to local storage
       box.write('totalAmount', newTotalAmount);
 
-      // Save cart items to server
-      await _cartService.saveCartItems(cartItems.toList());
+      // Save cart item to server
+      await _cartService.saveCartItem(item as CartModel);
       debugPrint('Cart items from Cart Controller: ${cartItems.length}');
     } catch (e) {
       addingToCartError('Failed to add item to cart');
