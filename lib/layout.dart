@@ -1,5 +1,5 @@
 import 'package:fashion_app/views/home/home.dart';
-import 'package:fashion_app/views/orders/orders.dart';
+import 'package:fashion_app/views/orders/order_history_and%20track_status.dart';
 import 'package:fashion_app/views/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,7 +33,7 @@ class _MainLayoutState extends State<MainLayout> {
         },
         children: <Widget>[
           HomeView(),
-          OrdersView(),
+          OrderHistoryAndTrackingOrderStatus(),
           ProfileView(),
         ],
       ),

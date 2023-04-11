@@ -1,7 +1,4 @@
-import 'package:fashion_app/layout.dart';
-import 'package:fashion_app/views/auth/auth.dart';
-import 'package:fashion_app/views/checkout/checkout.dart';
-import 'package:fashion_app/views/confirm/confirmation.dart';
+import 'package:fashion_app/views/orders/order_history_and%20track_status.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -40,7 +37,7 @@ class FashionApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
-      home: ConfirmationScreen(),
+      home: OrderHistoryAndTrackingOrderStatus(),
     );
   }
 }
