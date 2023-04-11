@@ -1,5 +1,6 @@
 import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/views/auth/auth.dart';
+import 'package:fashion_app/views/checkout/checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -37,7 +38,8 @@ class FashionApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
+      // home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
+      home: CheckoutScreen(),
     );
   }
 }
