@@ -1,7 +1,9 @@
-import 'package:fashion_app/views/recommendation/personalized_recommendation.dart';
+import 'package:fashion_app/views/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'layout.dart';
 
 /*
   Read the user's token from GetStorage. If the token is not empty,
@@ -36,10 +38,7 @@ class FashionApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
-      home: PersonalizedRecommendationsScreen(
-        recentPurchases: ["recent 1, recent 2, recent 3"],
-      ),
+      home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
     );
   }
 }

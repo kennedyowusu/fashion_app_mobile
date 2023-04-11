@@ -1,7 +1,9 @@
+import 'package:fashion_app/views/recommendation/personalized_recommendation.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class OrderHistoryAndTrackingOrderStatus extends StatelessWidget {
   const OrderHistoryAndTrackingOrderStatus({super.key});
@@ -79,6 +81,19 @@ class OrderHistoryAndTrackingOrderStatus extends StatelessWidget {
             SizedBox(height: 16.0),
             // Display personalized recommendations based on the user's recent purchases
             // For example, you could use a GridView to display a list of recommended items
+
+            Button(
+              width: double.infinity,
+              title: "View All",
+              onPressed: () {
+                Get.to(
+                  () => PersonalizedRecommendationsScreen(
+                    recentPurchases: [],
+                  ),
+                );
+              },
+              disable: false,
+            )
           ],
         ),
       ),

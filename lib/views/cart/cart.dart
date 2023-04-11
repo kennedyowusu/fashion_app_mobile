@@ -1,5 +1,6 @@
 import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/model/products.dart';
+import 'package:fashion_app/views/checkout/checkout.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:fashion_app/widgets/empty_screen.dart';
@@ -186,7 +187,11 @@ class CartScreen extends StatelessWidget {
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(
+                    () => CheckoutScreen(),
+                  );
+                },
                 child: Text('Checkout'),
               ),
             ],
