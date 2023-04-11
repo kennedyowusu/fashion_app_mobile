@@ -1,4 +1,4 @@
-import 'package:fashion_app/views/confirm/order_confirmation.dart';
+import 'package:fashion_app/views/recommendation/personalized_recommendation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -37,7 +37,9 @@ class FashionApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
-      home: OrderConfirmationScreen(),
+      home: PersonalizedRecommendationsScreen(
+        recentPurchases: ["recent 1, recent 2, recent 3"],
+      ),
     );
   }
 }
