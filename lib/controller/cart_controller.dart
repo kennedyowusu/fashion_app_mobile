@@ -122,7 +122,8 @@ class CartController extends GetxController {
 
   Future<bool> removeItemFromCart(int itemId) async {
     try {
-      final bool success = await _cartService.removeItemFromCart(itemId);
+      final bool success =
+          await _cartService.removeCartItem(int.parse(itemId.toString()));
       if (success) {
         // Update cart items list
         update();

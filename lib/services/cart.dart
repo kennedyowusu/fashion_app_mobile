@@ -85,10 +85,10 @@ class CartService {
     }
   }
 
-  Future<bool> removeItemFromCart(int cartId) async {
+  Future<bool> removeCartItem(int cartId) async {
     final url = Uri.parse("$CART_URL/$cartId");
 
-    debugPrint('URL: $url $cartId');
+    debugPrint('\n URL: $url $cartId');
 
     try {
       final token = await GetStorage().read('token');
@@ -117,7 +117,11 @@ class CartService {
         // convert response body to JSON object
         final json = jsonDecode(response.body);
 
-        if (json['data']['user_id'] == userId) {
+        if (
+            // check if cart item was deleted
+            json['data']['id'] == cartId &&
+                // check if cart item belongs to current user
+                json['data']['user_id'] == userId) {
           // show success message in snackbar
           // CustomSnackbar.show('Success', json['message']);
           return true;
