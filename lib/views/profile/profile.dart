@@ -152,100 +152,20 @@ class ProfileView extends StatelessWidget {
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Personal Information',
-                                style: Theme.of(context).textTheme.titleMedium,
+                          child: ListTile(
+                            onTap: () {
+                              authController.logoutUser();
+                            },
+                            title: Text(
+                              'Logout',
+                              style: TextStyle(
+                                fontSize: 16,
                               ),
-                              SizedBox(height: 10),
-                              ListTile(
-                                leading: Icon(Icons.person_outline),
-                                title: Text('Name'),
-                                // subtitle: Text(_profileData.name),
-                                // trailing: IconButton(
-                                //   icon: Icon(Icons.edit),
-                                //   onPressed: () => _showEditNameDialog(),
-                                // ),
-                              ),
-                              Divider(),
-                              ListTile(
-                                leading: Icon(Icons.email_outlined),
-                                title: Text('Email'),
-                                // subtitle: Text(_profileData.email),
-                                // trailing: IconButton(
-                                //   icon: Icon(Icons.edit),
-                                //   onPressed: () => _showEditEmailDialog(),
-                                // ),
-                              ),
-                              Divider(),
-                              ListTile(
-                                leading: Icon(Icons.phone_outlined),
-                                title: Text('Phone'),
-                                // subtitle: Text(_profileData.phone),
-                                // trailing: IconButton(
-                                //   icon: Icon(Icons.edit),
-                                //   onPressed: () => _showEditPhoneDialog(),
-                                // ),
-                              ),
-                              Divider(),
-                              ListTile(
-                                leading: Icon(Icons.date_range_outlined),
-                                title: Text('Date of Birth'),
-                                // subtitle: Text(_profileData.dateOfBirth),
-                                // trailing: IconButton(
-                                //   icon: Icon(Icons.edit),
-                                //   onPressed: () => _showEditDOBDialog(),
-                                // ),
-                              ),
-                              Divider(),
-                              ListTile(
-                                leading: Icon(Icons.location_on_outlined),
-                                title: Text('Address'),
-                                // subtitle: Text(_profileData.address),
-                                // trailing: IconButton(
-                                //   icon: Icon(Icons.edit),
-                                //   onPressed: () => _showEditAddressDialog(),
-                                // ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Account Information',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              SizedBox(height: 10),
-                              ListTile(
-                                leading: Icon(Icons.lock_outline),
-                                title: Text('Change Password'),
-                                // trailing: IconButton(
-                                //   icon: Icon(Icons.arrow_forward_ios),
-                                //   onPressed: () => Navigator.pushNamed(
-                                //     context,
-                                //     ChangePasswordScreen.routeName,
-                                //   ),
-                                // ),
-                              ),
-                              Divider(),
-                              ListTile(
-                                leading: Icon(Icons.logout),
-                                title: Text('Log Out'),
-                                trailing: IconButton(
-                                  icon: Icon(
-                                    Icons.arrow_forward_ios,
-                                  ),
-                                  onPressed: () => authController.logoutUser(),
-                                ),
-                              ),
-                            ],
+                            ),
+                            leading: Icon(
+                              Icons.logout,
+                              color: Config.primaryColor,
+                            ),
                           ),
                         ),
                       ],

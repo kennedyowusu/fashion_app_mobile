@@ -178,32 +178,14 @@ class AuthenticationController extends GetxController {
 
   Future<void> logoutUser() async {
     try {
-      final response = await http.post(
-        Uri.parse(LOGOUT_URL),
-        headers: HEADERS,
-      );
-      if (response.statusCode == 200) {
-        // Clear the local storage
-        token.value = '';
-        currentUserId.value = '';
-        box.remove('token');
-        box.remove('currentUserId');
-        await Get.offAll(() => const AuthSelector());
-      } else {
-        debugPrint('${json.decode(response.body)['message']}');
-        Get.snackbar(
-          'Error',
-          '${json.decode(response.body)['message']}',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
-    } on SocketException catch (e) {
-      debugPrint(e.toString());
-      Get.snackbar(
-        'Error',
-        'Network error: Check your internet connection',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      // Clear the local storage
+      token.value = '';
+      currentUserId.value = '';
+      box.remove('token');
+      box.remove('currentUserId');
+
+      // Navigate to the login page
+      await Get.offAll(() => const AuthSelector());
     } catch (e) {
       debugPrint(e.toString());
       Get.snackbar('Error', 'Logout Failed');
