@@ -15,11 +15,13 @@ class CartService {
       final token = await GetStorage().read('token');
       final currentUserId = await GetStorage().read('currentUserId');
 
+      debugPrint("Current User ID: $currentUserId");
+
       if (currentUserId == null) {
         throw Exception('User ID not found');
       }
 
-      final userId = int.parse(currentUserId['id']);
+      final userId = int.parse(currentUserId);
 
       final response = await http.get(
         url,
@@ -45,7 +47,7 @@ class CartService {
         throw Exception('Failed to fetch cart items');
       }
     } catch (e) {
-      debugPrint('Error fetching cart items: $e');
+      debugPrint('Error fetching cart itemszz: $e');
       throw Exception('Failed to fetch cart items: $e');
     }
   }
@@ -96,7 +98,7 @@ class CartService {
         throw Exception('User ID not found');
       }
 
-      final userId = int.parse(currentUserId['id']);
+      final userId = int.parse(currentUserId['id'].toString());
 
       // make HTTP request to delete cart item
       final response = await http.delete(
