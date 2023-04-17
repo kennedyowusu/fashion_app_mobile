@@ -139,10 +139,42 @@ class CartController extends GetxController {
     }
   }
 
-  void updateCartItemQuantity(int index, int newQuantity) {
-    final CartModel updatedItem =
-        cartItems[index].copyWith(quantity: newQuantity);
-    cartItems[index] = updatedItem;
-    updateTotalAmount();
+  // void updateCartItemQuantity(int index, int newQuantity) {
+  //   final CartModel updatedItem =
+  //       cartItems[index].copyWith(quantity: newQuantity);
+  //   cartItems[index] = updatedItem;
+  //   updateTotalAmount();
+  // }
+
+  void updateCartItemQuantity(int index, int newQuantity) async {
+    try {
+      final CartModel updatedItem =
+          cartItems[index].copyWith(quantity: newQuantity);
+
+      // Update cart item on the server
+      await _cartService.updateCartItem(updatedItem);
+
+      // Update local cart state
+      cartItems[index] = updatedItem;
+      updateTotalAmount();
+
+      // Update cart item quantity on the server
+      int itemId = int.tryParse(updatedItem.id as String) ?? -1;
+      await _cartService.updateCartItemQuantity(itemId, newQuantity);
+
+      // Show success message
+      Get.snackbar(
+        'Success',
+        'Cart item quantity updated',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to update cart item quantity: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      debugPrint('Error updating cart item quantity: $e');
+    }
   }
 }

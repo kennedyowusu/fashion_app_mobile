@@ -149,7 +149,7 @@ class CartService {
       final userId = int.parse(currentUserId['id'].toString());
 
       // make HTTP request to update cart item
-      final response = await http.patch(
+      final response = await http.put(
         url,
         headers: {
           'Accept': 'application/json',
@@ -182,4 +182,6 @@ class CartService {
       throw Exception('Failed to update cart item quantity: $e');
     }
   }
+
+  updateCartItem(CartModel updatedItem) {}
 }
