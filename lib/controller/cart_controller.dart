@@ -138,4 +138,11 @@ class CartController extends GetxController {
       return false;
     }
   }
+
+  void updateCartItemQuantity(int index, int newQuantity) {
+    final CartModel updatedItem =
+        cartItems[index].copyWith(quantity: newQuantity);
+    cartItems[index] = updatedItem;
+    updateTotalAmount();
+  }
 }

@@ -47,7 +47,7 @@ class CartService {
         throw Exception('Failed to fetch cart items');
       }
     } catch (e) {
-      debugPrint('Error fetching cart itemszz: $e');
+      debugPrint('Error fetching cart items: $e');
       throw Exception('Failed to fetch cart items: $e');
     }
   }
@@ -132,6 +132,54 @@ class CartService {
     } catch (e) {
       CustomSnackbar.show('Error', 'Failed to remove item from cart');
       throw Exception('Failed to remove item from cart: $e');
+    }
+  }
+
+  Future<void> updateCartItemQuantity(int cartItemId, int newQuantity) async {
+    final url = Uri.parse("$CART_URL/$cartItemId");
+
+    try {
+      final token = await GetStorage().read('token');
+      final currentUserId = await GetStorage().read('currentUserId');
+
+      if (currentUserId == null) {
+        throw Exception('User ID not found');
+      }
+
+      final userId = int.parse(currentUserId['id'].toString());
+
+      // make HTTP request to update cart item
+      final response = await http.patch(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'quantity': newQuantity,
+        }),
+      );
+
+      // check if request was successful
+      if (response.statusCode == 200) {
+        // convert response body to JSON object
+        final json = jsonDecode(response.body);
+
+        if (json['data']['user_id'] == userId) {
+          // show success message in snackbar
+          CustomSnackbar.show('Success', 'Cart item quantity updated');
+        } else {
+          CustomSnackbar.show('Error', 'Failed to update cart item quantity');
+          throw Exception('Failed to update cart item quantity');
+        }
+      } else {
+        CustomSnackbar.show('Error', 'Failed to update cart item quantity');
+        throw Exception('Failed to update cart item quantity');
+      }
+    } catch (e) {
+      CustomSnackbar.show('Error', 'Failed to update cart item quantity');
+      throw Exception('Failed to update cart item quantity: $e');
     }
   }
 }

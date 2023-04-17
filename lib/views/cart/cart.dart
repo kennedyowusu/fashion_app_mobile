@@ -124,12 +124,16 @@ class CartScreen extends StatelessWidget {
                                         color: Colors.white,
                                       ),
                                       onPressed: () {
-                                        cartController.decrementQuantity(index);
+                                        // cartController.decrementQuantity(index);
+                                        cartController.updateCartItemQuantity(
+                                            index,
+                                            cartItems[index].quantity - 1);
                                       },
                                     ),
                                     const SizedBox(width: 8.0),
                                     Text(
-                                      cartItem.quantity.toString(),
+                                      // cartItem.quantity.toString(),
+                                      cartItems[index].quantity.toString(),
                                       style: const TextStyle(
                                         fontSize: 18.0,
                                         fontFamily: 'Montserrat',
@@ -144,7 +148,10 @@ class CartScreen extends StatelessWidget {
                                         size: 18.0,
                                       ),
                                       onPressed: () {
-                                        cartController.incrementQuantity(index);
+                                        // cartController.incrementQuantity(index);
+                                        cartController.updateCartItemQuantity(
+                                            index,
+                                            cartItems[index].quantity + 1);
                                       },
                                     ),
                                   ],
