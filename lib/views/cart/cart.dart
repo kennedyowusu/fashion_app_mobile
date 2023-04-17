@@ -96,10 +96,10 @@ class CartScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(
-                            flex: 2,
-                            child: Image.network(cartItem.image),
-                          ),
+                          // Expanded(
+                          //   flex: 2,
+                          //   child: Image.network(cartItem.image),
+                          // ),
                           SizedBox(width: 16.0),
                           Expanded(
                             flex: 3,
