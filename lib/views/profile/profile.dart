@@ -54,7 +54,7 @@ class ProfileView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Name: ${user.name}',
+                                  'Name: ${user.name}'.toUpperCase(),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -99,28 +99,28 @@ class ProfileView extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Name: John Doe',
+                          'Name: ${user.name?.replaceRange(0, 1, user.name![0].toUpperCase())}',
                           style: TextStyle(
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          'Email: john.doe@example.com',
+                          'Email: ${user.email}',
                           style: TextStyle(
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          'Phone: +1 (123) 456-7890',
+                          'Phone: ${user.phone}',
                           style: TextStyle(
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          'Address: 1234 Main St, Anytown USA',
+                          'Address: ${user.address}',
                           style: TextStyle(
                             fontSize: 16,
                           ),
