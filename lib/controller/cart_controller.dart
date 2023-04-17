@@ -69,7 +69,17 @@ class CartController extends GetxController {
         );
         cartItems[existingItemIndex] = updatedItem;
       } else {
-        cartItems.add(item as CartModel);
+        final newCartItem = CartModel(
+          productId: item.id,
+          quantity: 1,
+          price: item.price,
+          totalPrice: item.price.toDouble(),
+          image: item.image,
+          name: item.name,
+          id: item.id,
+          userId: item.id,
+        );
+        cartItems.add(newCartItem);
       }
 
       // Update total amount
@@ -83,10 +93,10 @@ class CartController extends GetxController {
       box.write('totalAmount', newTotalAmount);
 
       // Save cart item to server
-      await _cartService.saveCartItem(item as CartModel);
+      await _cartService.saveCartItem(cartItems.last);
       debugPrint('Cart items from Cart Controller: ${cartItems.length}');
     } catch (e) {
-      addingToCartError('Failed to add item to cart');
+      addingToCartError('Failed to add item to cart $e');
       debugPrint('Error adding to cart: $e');
     } finally {
       updatingCart(false);

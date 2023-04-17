@@ -63,7 +63,8 @@ class CartService {
         throw Exception('User ID not found');
       }
 
-      final userId = int.parse(currentUserId['id']);
+      // final userId = int.parse(currentUserId['id']);
+      final userId = int.parse(currentUserId);
 
       final response = await http.post(
         url,
@@ -76,12 +77,20 @@ class CartService {
       );
 
       if (response.statusCode != 200) {
-        throw Exception('Failed to save cart item');
+        throw Exception(
+          'Failed to save cart item ${item.id} from user $userId',
+        );
       }
       debugPrint('Response body: ${response.body}');
+      // debug print the response body's message
+      debugPrint(
+        'Response body message: ${jsonDecode(response.body)['message']}',
+      );
     } catch (e) {
-      debugPrint('Failed to save cart item: $e');
-      throw Exception('Failed to save cart item: $e');
+      // debugPrint('Failed to save cart item: $e');
+      throw Exception(
+        'Failed to save cart with id: ${item.id} to cart: $e.',
+      );
     }
   }
 
