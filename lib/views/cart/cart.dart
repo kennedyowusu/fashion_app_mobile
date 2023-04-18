@@ -197,35 +197,38 @@ class CartScreen extends StatelessWidget {
           }
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 54.0,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Obx(
-                () => Text(
-                  'Total: ₵${cartController.totalAmount.value.toStringAsFixed(0)}',
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+      bottomNavigationBar: cartController.cartItems.isEmpty
+          ? Text("")
+          : BottomAppBar(
+              child: Container(
+                height: 54.0,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(
+                      () => Text(
+                        'Total: ₵${cartController.totalAmount.value.toStringAsFixed(0)}',
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        Get.to(
+                          () => CheckoutScreen(),
+                        );
+                      },
+                      child: Text('Checkout'),
+                    ),
+                  ],
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: () {
-                  Get.to(
-                    () => CheckoutScreen(),
-                  );
-                },
-                child: Text('Checkout'),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 
