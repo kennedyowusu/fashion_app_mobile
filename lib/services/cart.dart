@@ -97,8 +97,6 @@ class CartService {
   Future<bool> removeCartItem(int cartId) async {
     final url = Uri.parse("$CART_URL/$cartId");
 
-    debugPrint('\n URL: $url $cartId');
-
     try {
       final token = await GetStorage().read('token');
       final currentUserId = await GetStorage().read('currentUserId');
@@ -107,7 +105,8 @@ class CartService {
         throw Exception('User ID not found');
       }
 
-      final userId = int.parse(currentUserId['id'].toString());
+      // final userId = int.parse(currentUserId['id'].toString());
+      final userId = int.parse(currentUserId);
 
       // make HTTP request to delete cart item
       final response = await http.delete(
@@ -118,8 +117,6 @@ class CartService {
           'Authorization': 'Bearer $token',
         },
       );
-
-      debugPrint('Response body: ${response.body}');
 
       // check if request was successful
       if (response.statusCode == 200) {
@@ -134,17 +131,16 @@ class CartService {
           // show success message in snackbar
           // CustomSnackbar.show('Success', json['message']);
           return true;
-        } else {
-          CustomSnackbar.show('Error', 'Failed to remove item from cart');
-          throw Exception('Failed to remove item from cart');
         }
-      } else {
-        CustomSnackbar.show('Error', 'Failed to remove item from cart');
-        throw Exception('Failed to remove item from cart');
       }
+
+      // show error message in snackbar
+      debugPrint('Failed to remove item from cart');
+      return false;
     } catch (e) {
-      CustomSnackbar.show('Error', 'Failed to remove item from cart');
-      throw Exception('Failed to remove item from cart: $e');
+      // show error message in snackbar
+      debugPrint('Failed to remove item from cart $e');
+      return false;
     }
   }
 
