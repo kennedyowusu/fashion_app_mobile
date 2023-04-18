@@ -206,7 +206,7 @@ class CartScreen extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  'Total: ₵${cartController.totalAmount.value.toStringAsFixed(2)}',
+                  'Total: ₵${cartController.totalAmount.value.toStringAsFixed(0)}',
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
