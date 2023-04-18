@@ -4,6 +4,7 @@ import 'package:fashion_app/services/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class CartController extends GetxController {
   final CartService _cartService = CartService();
@@ -13,6 +14,8 @@ class CartController extends GetxController {
 
   final RxDouble totalAmount = 0.0.obs;
   final box = GetStorage();
+
+  int lastCartId = 0;
 
   final cartItemsCount = 0.obs;
   final updatingCart = false.obs;
@@ -75,7 +78,8 @@ class CartController extends GetxController {
           price: item.price,
           totalPrice: double.tryParse(item.price.toString()) ?? 0.0,
           name: item.name,
-          id: item.id,
+          // id: int.tryParse(Uuid().v1()) ?? 0,
+          id: lastCartId++,
           userId: item.id,
         );
         cartItems.add(newCartItem);

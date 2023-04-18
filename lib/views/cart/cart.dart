@@ -204,11 +204,12 @@ class CartScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Obx(() => Text(
-                    'Total: ₵${cartController.totalAmount.value.toStringAsFixed(2)}',
-                    style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                  )),
+              Obx(
+                () => Text(
+                  'Total: ₵${cartController.totalAmount.value.toStringAsFixed(2)}',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
