@@ -1,7 +1,7 @@
 import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/model/products.dart';
 import 'package:fashion_app/views/checkout/checkout.dart';
-import 'package:fashion_app/widgets/appbar.dart';
+import 'package:fashion_app/views/home/home.dart';
 import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:fashion_app/widgets/empty_screen.dart';
 import 'package:fashion_app/widgets/loader.dart';
@@ -22,11 +22,30 @@ class CartScreen extends StatelessWidget {
     final cartItems = cartController.cartItems;
     return Scaffold(
       backgroundColor: cartItems.isEmpty ? Colors.white : Colors.grey[200],
-      appBar: CustomAppBar(
-        title: 'Cart Items',
-        leadingIcon: FaIcon(
-          FontAwesomeIcons.chevronLeft,
-          color: Colors.black,
+      appBar: AppBar(
+        title: Text('Cart Items'),
+        backgroundColor: Colors.white,
+        leading: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.grey[300]!,
+            ),
+          ),
+          child: Center(
+            child: IconButton(
+              onPressed: () {
+                Get.off(() => HomeView());
+              },
+              icon: FaIcon(
+                FontAwesomeIcons.chevronLeft,
+                color: Colors.black,
+                size: 16.0,
+              ),
+            ),
+          ),
         ),
         actions: [
           IconButton(
@@ -126,8 +145,9 @@ class CartScreen extends StatelessWidget {
                                       onPressed: () {
                                         // cartController.decrementQuantity(index);
                                         cartController.updateCartItemQuantity(
-                                            index,
-                                            cartItems[index].quantity - 1);
+                                          index,
+                                          cartItems[index].quantity - 1,
+                                        );
                                       },
                                     ),
                                     const SizedBox(width: 8.0),
