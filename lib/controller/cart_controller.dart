@@ -4,7 +4,6 @@ import 'package:fashion_app/services/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:uuid/uuid.dart';
 
 class CartController extends GetxController {
   final CartService _cartService = CartService();
@@ -138,7 +137,17 @@ class CartController extends GetxController {
       final bool success =
           await _cartService.removeCartItem(int.parse(itemId.toString()));
       if (success) {
-        // Update cart items list
+        // Remove item from cart items list
+        cartItems.removeWhere((item) => item.id == itemId);
+
+        // Update total amount
+        final newTotalAmount =
+            cartItems.fold(0.0, (total, item) => total + item.totalPrice);
+        totalAmount(newTotalAmount);
+
+        // Save total amount to local storage
+        box.write('totalAmount', newTotalAmount);
+
         update();
       }
       return success;
