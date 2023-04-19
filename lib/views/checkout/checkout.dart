@@ -149,6 +149,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Expanded(
                             child: phoneController.showTextFormField.value
                                 ? TextFormField(
+                                    controller: _phoneNumberController,
                                     initialValue:
                                         phoneController.phoneNumber.value,
                                     keyboardType: TextInputType.phone,
