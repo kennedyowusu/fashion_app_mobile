@@ -9,5 +9,6 @@ const String CART_URL = "${BASE_URL}carts";
 const String USER_URL = "${BASE_URL}users";
 const String PROFILE_URL = "${BASE_URL}profile";
 const String PRODUCTS_URL = "${BASE_URL}products";
+const String SHIPPING_ADDRESS_URL = "${BASE_URL}shipping-address";
 
 const Map<String, String> HEADERS = {'Accept': 'application/json'};
