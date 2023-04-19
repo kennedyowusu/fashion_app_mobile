@@ -1,4 +1,6 @@
+import 'package:fashion_app/controller/phone_controller.dart';
 import 'package:fashion_app/controller/user.dart';
+import 'package:fashion_app/helper/config.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:fashion_app/widgets/custom_textformfield.dart';
@@ -28,8 +30,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _expirationDateController =
       TextEditingController();
   final TextEditingController _cvvController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   final UserController userController = Get.put(UserController());
+  final PhoneController phoneController = Get.put(PhoneController());
 
   bool showTextFormField = false;
 
@@ -139,69 +143,59 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Stack(
-                      children: [
-                        Offstage(
-                          offstage: showTextFormField,
-                          child: Row(
-                            children: [
-                              Text(
-                                userController.user.value.phone.toString(),
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Spacer(),
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    showTextFormField = true;
-                                  });
-                                },
-                                child: Text(
-                                  'Change',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
+                    child: Obx(
+                      () => Row(
+                        children: [
+                          Expanded(
+                            child: phoneController.showTextFormField.value
+                                ? TextFormField(
+                                    initialValue:
+                                        phoneController.phoneNumber.value,
+                                    keyboardType: TextInputType.phone,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter phone number',
+                                    ),
+                                    onChanged: (value) {
+                                      phoneController.setPhoneNumber(value);
+                                    },
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter your phone number';
+                                      }
+                                      return null;
+                                    },
+                                  )
+                                : Text(
+                                    phoneController.phoneNumber.value,
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
-                        Offstage(
-                          offstage: !showTextFormField,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  keyboardType: TextInputType.phone,
-                                  // controller: _phoneController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter your phone number';
-                                    }
-                                    return null;
+                          SizedBox(width: 16.0),
+                          phoneController.showTextFormField.value
+                              ? IconButton(
+                                  onPressed: () {
+                                    phoneController.setShowTextFormField(false);
                                   },
-                                  decoration: InputDecoration(
-                                    hintText: 'Phone Number',
+                                  icon: Icon(Icons.close),
+                                )
+                              : TextButton(
+                                  onPressed: () {
+                                    phoneController.setShowTextFormField(true);
+                                  },
+                                  child: Text(
+                                    'Change',
+                                    style: TextStyle(
+                                      color: Config.primaryColor,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    showTextFormField = false;
-                                  });
-                                },
-                                icon: Icon(Icons.close),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 16.0),
