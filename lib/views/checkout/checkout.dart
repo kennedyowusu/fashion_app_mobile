@@ -28,11 +28,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _zipCodeController = TextEditingController();
-  final TextEditingController _cardNumberController = TextEditingController();
-  final TextEditingController _expirationDateController =
-      TextEditingController();
-  final TextEditingController _cvvController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   final UserController userController = Get.put(UserController());
   final PhoneController phoneController = Get.put(PhoneController());
@@ -40,6 +36,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       Get.put(ShippingAddressService());
 
   bool showTextFormField = false;
+
+  void clearFormFields() {
+    _nameController.clear();
+    _addressLine1Controller.clear();
+    _addressLine2Controller.clear();
+    _cityController.clear();
+    _stateController.clear();
+    _zipCodeController.clear();
+    _phoneController.clear();
+  }
 
   @override
   void dispose() {
@@ -49,9 +55,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     _cityController.dispose();
     _stateController.dispose();
     _zipCodeController.dispose();
-    _cardNumberController.dispose();
-    _expirationDateController.dispose();
-    _cvvController.dispose();
+    _phoneController.dispose();
 
     super.dispose();
   }
@@ -268,7 +272,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 shippingAddressService.createShippingAddress(
                                   name: _nameController.text,
                                   addressLineOne: _addressLine1Controller.text,
-                                  phone: _phoneNumberController.text,
+                                  phone: _phoneController.text,
                                   city: _cityController.text,
                                   state: _stateController.text,
                                   zip: _zipCodeController.text,
@@ -276,8 +280,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 );
                               }
 
+                              clearFormFields();
+
                               debugPrint(
-                                'Name: ${_nameController.text}, Address: ${_addressLine1Controller.text}, Phone: ${_phoneNumberController.text}, City: ${_cityController.text}, State: ${_stateController.text}, Zip: ${_zipCodeController.text}, User: ${userController.user.value.id}',
+                                'Name: ${_nameController.text}, Address: ${_addressLine1Controller.text}, Phone: ${_phoneController.text}, City: ${_cityController.text}, State: ${_stateController.text}, Zip: ${_zipCodeController.text}, User: ${userController.user.value.id}',
                               );
                             },
                             disable: shippingAddressService.isLoading.value,
