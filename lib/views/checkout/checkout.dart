@@ -1,8 +1,10 @@
+import 'package:fashion_app/controller/user.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:fashion_app/widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static const routeName = '/checkout';
@@ -26,6 +28,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _expirationDateController =
       TextEditingController();
   final TextEditingController _cvvController = TextEditingController();
+
+  final UserController userController = Get.put(UserController());
+
+  bool showTextFormField = false;
 
   @override
   void dispose() {
@@ -78,11 +84,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Shipping Address',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(height: 6.0),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Shipping Address'.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -117,6 +127,82 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     labelText: 'Address Line 2',
                     hintText: 'Address Line 2',
                     controller: _addressLine2Controller,
+                  ),
+                  SizedBox(height: 16.0),
+                  Container(
+                    height: 60.0,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Stack(
+                      children: [
+                        Offstage(
+                          offstage: showTextFormField,
+                          child: Row(
+                            children: [
+                              Text(
+                                userController.user.value.phone.toString(),
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Spacer(),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showTextFormField = true;
+                                  });
+                                },
+                                child: Text(
+                                  'Change',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Offstage(
+                          offstage: !showTextFormField,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  keyboardType: TextInputType.phone,
+                                  // controller: _phoneController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your phone number';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: 'Phone Number',
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showTextFormField = false;
+                                  });
+                                },
+                                icon: Icon(Icons.close),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 16.0),
                   Row(
@@ -167,67 +253,67 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(height: 32.0),
-                  Text(
-                    'Payment Information',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  CustomTextField(
-                    keyboardType: TextInputType.number,
-                    labelText: 'Card Number',
-                    hintText: 'Card Number',
-                    controller: _cardNumberController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your Card Number';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 16.0),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.datetime,
-                          controller: _expirationDateController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter the expiration date';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Expiration Date',
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 16.0),
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          controller: _cvvController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter the CVV';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'CVV',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // SizedBox(height: 32.0),
+                  // Text(
+                  //   'Payment Information',
+                  //   style: TextStyle(
+                  //     fontSize: 18.0,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
+                  // SizedBox(height: 16.0),
+                  // CustomTextField(
+                  //   keyboardType: TextInputType.number,
+                  //   labelText: 'Card Number',
+                  //   hintText: 'Card Number',
+                  //   controller: _cardNumberController,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return 'Please enter your Card Number';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  // SizedBox(height: 16.0),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: TextFormField(
+                  //         keyboardType: TextInputType.datetime,
+                  //         controller: _expirationDateController,
+                  //         validator: (value) {
+                  //           if (value!.isEmpty) {
+                  //             return 'Please enter the expiration date';
+                  //           }
+                  //           return null;
+                  //         },
+                  //         decoration: InputDecoration(
+                  //           hintText: 'Expiration Date',
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 16.0),
+                  //     Expanded(
+                  //       child: TextFormField(
+                  //         keyboardType: TextInputType.number,
+                  //         controller: _cvvController,
+                  //         validator: (value) {
+                  //           if (value!.isEmpty) {
+                  //             return 'Please enter the CVV';
+                  //           }
+                  //           return null;
+                  //         },
+                  //         decoration: InputDecoration(
+                  //           hintText: 'CVV',
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 32.0),
                   Button(
                     width: double.infinity,
-                    title: 'Place Order',
+                    title: 'Proceed To Pay',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // Perform checkout
