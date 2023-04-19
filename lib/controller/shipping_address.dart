@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 class ShippingAddressController extends GetxController {
   final RxList<ShippingAddress> shippingAddress = <ShippingAddress>[].obs;
 
+  final isLoading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -31,6 +33,7 @@ class ShippingAddressController extends GetxController {
     required String state,
     required String zip,
     required String phone,
+    required int userId,
   }) async {
     try {
       await ShippingAddressService().createShippingAddress(
@@ -40,6 +43,7 @@ class ShippingAddressController extends GetxController {
         state: state,
         zip: zip,
         phone: phone,
+        userId: userId,
       );
       fetchShippingAddress();
     } catch (e) {

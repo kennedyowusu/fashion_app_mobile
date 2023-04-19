@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:fashion_app/helper/api_exception.dart';
 import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/services/endpoints.dart';
+import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,10 +16,14 @@ class ShippingAddressService {
   static const String jsonContentType = 'application/json';
   static const String jsonAcceptType = 'application/json';
 
+  final RxBool isLoading = false.obs;
+
   Future<ShippingAddressModelResponse> fetchShippingAddress() async {
     final url = Uri.parse(SHIPPING_ADDRESS_URL);
 
     try {
+      isLoading(true);
+
       final token = await GetStorage().read('token');
       final currentUserId = await GetStorage().read('currentUserId');
 
@@ -39,6 +45,7 @@ class ShippingAddressService {
       );
 
       if (response.statusCode == 200) {
+        isLoading(false);
         final jsonResponse = jsonDecode(response.body)['data'] as List<dynamic>;
 
         final shippingAddress = jsonResponse
@@ -46,17 +53,35 @@ class ShippingAddressService {
             .map((item) => ShippingAddress.fromJson(item))
             .toList();
 
-        debugPrint('Shipping Address: ${shippingAddress.length}');
+        debugPrint('Shipping Address: ${shippingAddress.toString()}');
 
         return ShippingAddressModelResponse(
           data: shippingAddress,
         );
       } else {
+        isLoading(false);
         final errorMessage = jsonDecode(response.body)['message'];
-        throw ApiException(errorMessage, response.statusCode);
+        Get.snackbar(
+          'Error',
+          errorMessage,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          margin: const EdgeInsets.all(8),
+          borderRadius: 8,
+          icon: const Icon(
+            Icons.error,
+            color: Colors.white,
+          ),
+        );
+
+        throw Exception(errorMessage);
       }
     } catch (e) {
       throw ApiException('Failed to fetch shipping address', null);
+    } finally {
+      // Hide loading indicator
+      isLoading(false);
     }
   }
 
@@ -84,6 +109,7 @@ class ShippingAddressService {
     final url = Uri.parse(SHIPPING_ADDRESS_URL);
 
     try {
+      isLoading(true);
       final token = await GetStorage().read('token');
       final currentUserId = await GetStorage().read('currentUserId');
 
@@ -112,16 +138,38 @@ class ShippingAddressService {
       );
 
       if (response.statusCode == 200) {
+        isLoading(false);
         final jsonResponse = jsonDecode(response.body);
+
+        CustomSnackbar.show(
+          'Success',
+          'Shipping address created successfully',
+          color: Colors.green,
+        );
 
         debugPrint(jsonResponse.toString());
       } else {
-        final errorMessage = jsonDecode(response.body)['message'];
+        isLoading(false);
+        CustomSnackbar.show(
+          'Sorry',
+          jsonDecode(response.body)['error'],
+          color: Colors.red,
+        );
+        debugPrint(response.body);
+        final errorMessage = jsonDecode(response.body)['error'];
         debugPrint(errorMessage);
-        throw ApiException(errorMessage, response.statusCode);
       }
     } catch (e) {
-      throw ApiException('Failed to create shipping address', null);
+      if (e is ApiException) {
+        // handle ApiException with custom error message
+        debugPrint('Error: ${e.message}');
+      } else {
+        // handle other exceptions
+        debugPrint('Error: $e');
+      }
+    } finally {
+      // Hide loading indicator
+      isLoading(false);
     }
   }
 
@@ -181,6 +229,7 @@ class ShippingAddressService {
     final url = Uri.parse('$SHIPPING_ADDRESS_URL/$shippingAddressId');
 
     try {
+      isLoading(true);
       final token = await GetStorage().read('token');
 
       final response = await http.delete(
@@ -193,14 +242,18 @@ class ShippingAddressService {
       );
 
       if (response.statusCode == 200) {
+        isLoading(false);
         debugPrint('Shipping address deleted successfully');
       } else {
+        isLoading(false);
         final errorMessage = jsonDecode(response.body)['message'];
         debugPrint(errorMessage);
         throw Exception('Failed to delete shipping address');
       }
     } catch (e) {
       throw Exception('Failed to delete shipping address');
+    } finally {
+      isLoading(false);
     }
   }
 }

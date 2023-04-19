@@ -1,9 +1,11 @@
 import 'package:fashion_app/controller/phone_controller.dart';
 import 'package:fashion_app/controller/user.dart';
 import 'package:fashion_app/helper/config.dart';
+import 'package:fashion_app/services/shipping_Address.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:fashion_app/widgets/custom_textformfield.dart';
+import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -34,6 +36,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   final UserController userController = Get.put(UserController());
   final PhoneController phoneController = Get.put(PhoneController());
+  final ShippingAddressService shippingAddressService =
+      Get.put(ShippingAddressService());
 
   bool showTextFormField = false;
 
@@ -83,7 +87,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           padding: EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +152,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Expanded(
                             child: phoneController.showTextFormField.value
                                 ? TextFormField(
-                                    controller: _phoneNumberController,
+                                    // controller: _phoneNumberController,
                                     initialValue:
                                         phoneController.phoneNumber.value,
                                     keyboardType: TextInputType.phone,
@@ -171,6 +174,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                   ),
                           ),
@@ -248,74 +252,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       return null;
                     },
                   ),
-                  // SizedBox(height: 32.0),
-                  // Text(
-                  //   'Payment Information',
-                  //   style: TextStyle(
-                  //     fontSize: 18.0,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  // ),
-                  // SizedBox(height: 16.0),
-                  // CustomTextField(
-                  //   keyboardType: TextInputType.number,
-                  //   labelText: 'Card Number',
-                  //   hintText: 'Card Number',
-                  //   controller: _cardNumberController,
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return 'Please enter your Card Number';
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
-                  // SizedBox(height: 16.0),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: TextFormField(
-                  //         keyboardType: TextInputType.datetime,
-                  //         controller: _expirationDateController,
-                  //         validator: (value) {
-                  //           if (value!.isEmpty) {
-                  //             return 'Please enter the expiration date';
-                  //           }
-                  //           return null;
-                  //         },
-                  //         decoration: InputDecoration(
-                  //           hintText: 'Expiration Date',
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     SizedBox(width: 16.0),
-                  //     Expanded(
-                  //       child: TextFormField(
-                  //         keyboardType: TextInputType.number,
-                  //         controller: _cvvController,
-                  //         validator: (value) {
-                  //           if (value!.isEmpty) {
-                  //             return 'Please enter the CVV';
-                  //           }
-                  //           return null;
-                  //         },
-                  //         decoration: InputDecoration(
-                  //           hintText: 'CVV',
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   SizedBox(height: 32.0),
+                  Obx(
+                    () => shippingAddressService.isLoading.value
+                        ? Center(
+                            child: Loader(),
+                          )
+                        : Button(
+                            width: double.infinity,
+                            title: 'Save Address',
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                // Perform checkout
+
+                                shippingAddressService.createShippingAddress(
+                                  name: _nameController.text,
+                                  addressLineOne: _addressLine1Controller.text,
+                                  phone: _phoneNumberController.text,
+                                  city: _cityController.text,
+                                  state: _stateController.text,
+                                  zip: _zipCodeController.text,
+                                  userId: userController.user.value.id!,
+                                );
+                              }
+
+                              debugPrint(
+                                'Name: ${_nameController.text}, Address: ${_addressLine1Controller.text}, Phone: ${_phoneNumberController.text}, City: ${_cityController.text}, State: ${_stateController.text}, Zip: ${_zipCodeController.text}, User: ${userController.user.value.id}',
+                              );
+                            },
+                            disable: shippingAddressService.isLoading.value,
+                          ),
+                  ),
+                  SizedBox(height: 16.0),
                   Button(
                     width: double.infinity,
-                    title: 'Proceed To Pay',
+                    title: 'Proceed to Pay',
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // Perform checkout
-                        debugPrint('Checkout successful');
-                      }
+                      Get.back();
                     },
-                    disable: false,
+                    disable: shippingAddressService.isLoading.value,
                   ),
                 ],
               ),

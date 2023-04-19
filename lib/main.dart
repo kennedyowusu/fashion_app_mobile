@@ -16,7 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   final box = GetStorage();
-  box.remove('token');
+  // box.remove('token');
   final token = box.read('token') ?? '';
   final currentUserId = box.read('currentUserId');
   debugPrint(currentUserId);
