@@ -175,7 +175,7 @@ class ShippingAddressService {
     }
   }
 
-  Future<void> deleteShipping({
+  Future<void> deleteShippingAddress({
     required int shippingAddressId,
   }) async {
     final url = Uri.parse('$SHIPPING_ADDRESS_URL/$shippingAddressId');

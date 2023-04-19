@@ -46,4 +46,44 @@ class ShippingAddressController extends GetxController {
       debugPrint('Error: $e');
     }
   }
+
+  Future<void> updateShippingAddress({
+    required int id,
+    required String name,
+    required String address,
+    required String city,
+    required String state,
+    required String zip,
+    required String phone,
+    required int userId,
+  }) async {
+    try {
+      await ShippingAddressService().updateShippingAddress(
+        id: id,
+        name: name,
+        addressLineOne: address,
+        city: city,
+        state: state,
+        zip: zip,
+        phone: phone,
+        userId: userId,
+      );
+      fetchShippingAddress();
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
+  }
+
+  Future<void> deleteShippingAddress({
+    required int id,
+  }) async {
+    try {
+      await ShippingAddressService().deleteShippingAddress(
+        shippingAddressId: id,
+      );
+      fetchShippingAddress();
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
+  }
 }
