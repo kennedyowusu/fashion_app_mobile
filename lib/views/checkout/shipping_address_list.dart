@@ -1,4 +1,5 @@
 import 'package:fashion_app/controller/shipping_address.dart';
+import 'package:fashion_app/helper/config.dart';
 import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/loader.dart';
@@ -16,7 +17,7 @@ class ShippingAddressList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Shipping Addresse',
+        title: 'Shipping Address',
         leadingIcon: FaIcon(
           FontAwesomeIcons.chevronLeft,
           color: Colors.black,
@@ -56,16 +57,39 @@ class ShippingAddressList extends StatelessWidget {
                         itemBuilder: (context, index) {
                           ShippingAddress address =
                               shippingAddressService.shippingAddress[index];
-                          return ListTile(
-                            title: Text(address.name),
-                            subtitle: Text(
-                              '${address.addressLine1}, ${address.city} ${address.state} ${address.zip}',
+                          return Container(
+                            height: 100,
+                            width: double.infinity,
+                            margin: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Config.primaryColor,
                             ),
-                            trailing: IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {
-                                // Navigate to Edit Shipping Address screen
-                              },
+                            child: ListTile(
+                              title: Text(
+                                address.name,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                '${address.addressLine1}, ${address.city} ${address.state} ${address.zip}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              trailing: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 20,
+                                child: IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () {
+                                    // Navigate to Edit Shipping Address screen
+                                  },
+                                ),
+                              ),
                             ),
                           );
                         },
