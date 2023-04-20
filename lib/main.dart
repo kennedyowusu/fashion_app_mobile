@@ -40,8 +40,8 @@ class FashionApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
-      home: ShippingAddressList(),
+      home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
+      // home: ShippingAddressList(),
     );
   }
 }

@@ -32,7 +32,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _phoneController = TextEditingController();
 
   final UserController userController = Get.put(UserController());
-  final PhoneController phoneController = Get.put(PhoneController());
+  // final PhoneController phoneController = Get.put(PhoneController());
   final ShippingAddressService shippingAddressService =
       Get.put(ShippingAddressService());
 
@@ -151,61 +151,74 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Obx(
-                      () => Row(
-                        children: [
-                          Expanded(
-                            child: phoneController.showTextFormField.value
-                                ? TextFormField(
-                                    // controller: _phoneNumberController,
-                                    initialValue:
-                                        phoneController.phoneNumber.value,
-                                    keyboardType: TextInputType.phone,
-                                    decoration: InputDecoration(
-                                      hintText: 'Enter phone number',
-                                    ),
-                                    onChanged: (value) {
-                                      phoneController.setPhoneNumber(value);
-                                    },
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter your phone number';
-                                      }
-                                      return null;
-                                    },
-                                  )
-                                : Text(
-                                    phoneController.phoneNumber.value,
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(width: 16.0),
-                          phoneController.showTextFormField.value
-                              ? IconButton(
-                                  onPressed: () {
-                                    phoneController.setShowTextFormField(false);
-                                  },
-                                  icon: Icon(Icons.close),
-                                )
-                              : TextButton(
-                                  onPressed: () {
-                                    phoneController.setShowTextFormField(true);
-                                  },
-                                  child: Text(
-                                    'Change',
-                                    style: TextStyle(
-                                      color: Config.primaryColor,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                        ],
+                    // child: Obx(
+                    //   () => Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: phoneController.showTextFormField.value
+                    //             ? TextFormField(
+                    //                 // controller: _phoneNumberController,
+                    //                 initialValue:
+                    //                     phoneController.phoneNumber.value,
+                    //                 keyboardType: TextInputType.phone,
+                    //                 decoration: InputDecoration(
+                    //                   hintText: 'Enter phone number',
+                    //                 ),
+                    //                 onChanged: (value) {
+                    //                   phoneController.setPhoneNumber(value);
+                    //                 },
+                    //                 validator: (value) {
+                    //                   if (value!.isEmpty) {
+                    //                     return 'Please enter your phone number';
+                    //                   }
+                    //                   return null;
+                    //                 },
+                    //               )
+                    //             : Text(
+                    //                 phoneController.phoneNumber.value,
+                    //                 style: TextStyle(
+                    //                   fontSize: 16.0,
+                    //                   fontWeight: FontWeight.bold,
+                    //                   color: Colors.black,
+                    //                 ),
+                    //               ),
+                    //       ),
+                    //       SizedBox(width: 16.0),
+                    //       phoneController.showTextFormField.value
+                    //           ? IconButton(
+                    //               onPressed: () {
+                    //                 phoneController.setShowTextFormField(false);
+                    //               },
+                    //               icon: Icon(Icons.close),
+                    //             )
+                    //           : TextButton(
+                    //               onPressed: () {
+                    //                 phoneController.setShowTextFormField(true);
+                    //               },
+                    //               child: Text(
+                    //                 'Change',
+                    //                 style: TextStyle(
+                    //                   color: Config.primaryColor,
+                    //                   fontSize: 16.0,
+                    //                   fontWeight: FontWeight.bold,
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //     ],
+                    //   ),
+                    // ),
+                    child: TextFormField(
+                      controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        hintText: 'Enter phone number',
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your phone number';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -281,11 +294,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 );
                               }
 
-                              clearFormFields();
-
                               debugPrint(
                                 'Name: ${_nameController.text}, Address: ${_addressLine1Controller.text}, Phone: ${_phoneController.text}, City: ${_cityController.text}, State: ${_stateController.text}, Zip: ${_zipCodeController.text}, User: ${userController.user.value.id}',
                               );
+
+                              clearFormFields();
                             },
                             disable: shippingAddressService.isLoading.value,
                           ),

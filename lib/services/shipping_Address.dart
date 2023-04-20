@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fashion_app/helper/api_exception.dart';
 import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/services/endpoints.dart';
+import 'package:fashion_app/views/checkout/shipping_address_list.dart';
 import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -145,6 +146,11 @@ class ShippingAddressService {
 
         box.write('shippingAddressId', jsonResponse['data']['id']);
 
+        Get.to(
+          () => ShippingAddressList(),
+          transition: Transition.rightToLeft,
+        );
+
         CustomSnackbar.show(
           'Success',
           'Shipping address created successfully',
@@ -259,5 +265,15 @@ class ShippingAddressService {
     } finally {
       isLoading(false);
     }
+  }
+
+  bool hasShippingAddressForCurrentUser() {
+    final shippingAddressId = box.read('shippingAddressId');
+    final currentUserId = box.read('currentUserId');
+    final savedAddressUserId = box.read('shippingAddressUserId');
+
+    return shippingAddressId != null &&
+        currentUserId != null &&
+        savedAddressUserId == currentUserId;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/model/products.dart';
+import 'package:fashion_app/services/shipping_Address.dart';
 import 'package:fashion_app/views/checkout/checkout.dart';
+import 'package:fashion_app/views/checkout/shipping_address_list.dart';
 import 'package:fashion_app/views/home/home.dart';
 import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:fashion_app/widgets/empty_screen.dart';
@@ -16,6 +18,8 @@ class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
   final box = GetStorage();
   final Product? product;
+  final ShippingAddressService shippingAddressService =
+      Get.put(ShippingAddressService());
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +214,9 @@ class CartScreen extends StatelessWidget {
                       () => Text(
                         'Total: ₵${cartController.totalAmount.value.toStringAsFixed(0)}',
                         style: TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     ElevatedButton(
@@ -219,9 +225,12 @@ class CartScreen extends StatelessWidget {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () {
-                        Get.to(
-                          () => CheckoutScreen(),
-                        );
+                        if (shippingAddressService
+                            .hasShippingAddressForCurrentUser()) {
+                          Get.to(() => ShippingAddressList());
+                        } else {
+                          Get.to(() => CheckoutScreen());
+                        }
                       },
                       child: Text('Checkout'),
                     ),
