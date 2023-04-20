@@ -18,6 +18,8 @@ class ShippingAddressService {
 
   final RxBool isLoading = false.obs;
 
+  final GetStorage box = GetStorage();
+
   Future<ShippingAddressModelResponse> fetchShippingAddress() async {
     final url = Uri.parse(SHIPPING_ADDRESS_URL);
 
@@ -140,6 +142,8 @@ class ShippingAddressService {
       if (response.statusCode == 200) {
         isLoading(false);
         final jsonResponse = jsonDecode(response.body);
+
+        box.write('shippingAddressId', jsonResponse['data']['id']);
 
         CustomSnackbar.show(
           'Success',

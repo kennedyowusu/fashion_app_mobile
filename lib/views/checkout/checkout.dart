@@ -9,6 +9,7 @@ import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static const routeName = '/checkout';
