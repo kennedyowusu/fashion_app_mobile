@@ -1,8 +1,9 @@
 import 'package:fashion_app/views/auth/auth.dart';
-import 'package:fashion_app/views/checkout/shipping_address_list.dart';
+import 'package:fashion_app/views/no_inernet/no_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:connectivity/connectivity.dart';
 
 import 'layout.dart';
 
@@ -29,10 +30,32 @@ void main() async {
   runApp(FashionApp(isUserLoggedIn: token.isNotEmpty));
 }
 
-class FashionApp extends StatelessWidget {
+class FashionApp extends StatefulWidget {
   final bool isUserLoggedIn;
 
   const FashionApp({required this.isUserLoggedIn, Key? key}) : super(key: key);
+
+  @override
+  _FashionAppState createState() => _FashionAppState();
+}
+
+class _FashionAppState extends State<FashionApp> {
+  bool hasInternetConnection = true;
+
+  @override
+  void initState() {
+    super.initState();
+    checkInternetConnection();
+  }
+
+  Future<void> checkInternetConnection() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        hasInternetConnection = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +68,13 @@ class FashionApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: isUserLoggedIn ? const MainLayout() : AuthSelector(),
-      // home: ShippingAddressList(),
+      home: hasInternetConnection
+          ? widget.isUserLoggedIn
+              ? const MainLayout()
+              : AuthSelector()
+          : NoInternetScreen(
+              message: 'No internet Connection.',
+            ),
     );
   }
 }
