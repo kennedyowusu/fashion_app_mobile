@@ -1,7 +1,6 @@
-import 'package:fashion_app/controller/phone_controller.dart';
 import 'package:fashion_app/controller/user.dart';
-import 'package:fashion_app/helper/config.dart';
 import 'package:fashion_app/services/shipping_Address.dart';
+import 'package:fashion_app/views/checkout/shipping_address_list.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:fashion_app/widgets/custom_textformfield.dart';
@@ -9,7 +8,6 @@ import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static const routeName = '/checkout';
@@ -151,62 +149,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    // child: Obx(
-                    //   () => Row(
-                    //     children: [
-                    //       Expanded(
-                    //         child: phoneController.showTextFormField.value
-                    //             ? TextFormField(
-                    //                 // controller: _phoneNumberController,
-                    //                 initialValue:
-                    //                     phoneController.phoneNumber.value,
-                    //                 keyboardType: TextInputType.phone,
-                    //                 decoration: InputDecoration(
-                    //                   hintText: 'Enter phone number',
-                    //                 ),
-                    //                 onChanged: (value) {
-                    //                   phoneController.setPhoneNumber(value);
-                    //                 },
-                    //                 validator: (value) {
-                    //                   if (value!.isEmpty) {
-                    //                     return 'Please enter your phone number';
-                    //                   }
-                    //                   return null;
-                    //                 },
-                    //               )
-                    //             : Text(
-                    //                 phoneController.phoneNumber.value,
-                    //                 style: TextStyle(
-                    //                   fontSize: 16.0,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   color: Colors.black,
-                    //                 ),
-                    //               ),
-                    //       ),
-                    //       SizedBox(width: 16.0),
-                    //       phoneController.showTextFormField.value
-                    //           ? IconButton(
-                    //               onPressed: () {
-                    //                 phoneController.setShowTextFormField(false);
-                    //               },
-                    //               icon: Icon(Icons.close),
-                    //             )
-                    //           : TextButton(
-                    //               onPressed: () {
-                    //                 phoneController.setShowTextFormField(true);
-                    //               },
-                    //               child: Text(
-                    //                 'Change',
-                    //                 style: TextStyle(
-                    //                   color: Config.primaryColor,
-                    //                   fontSize: 16.0,
-                    //                   fontWeight: FontWeight.bold,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //     ],
-                    //   ),
-                    // ),
                     child: TextFormField(
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
@@ -283,22 +225,60 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               if (_formKey.currentState!.validate()) {
                                 // Perform checkout
 
+                                print('Name: ${_nameController.text}');
+                                print(
+                                    'Address Line 1: ${_addressLine1Controller.text}');
+                                print(
+                                    'Address Line 2: ${_addressLine2Controller.text}');
+                                print('Phone: ${_phoneController.text}');
+                                print('City: ${_cityController.text}');
+                                print('State: ${_stateController.text}');
+                                print('Zip Code: ${_zipCodeController.text}');
+                                print(
+                                    'User ID: ${userController.user.value.id}');
+
                                 shippingAddressService.createShippingAddress(
                                   name: _nameController.text,
                                   addressLineOne: _addressLine1Controller.text,
+                                  addressLineTwo: _addressLine2Controller.text,
                                   phone: _phoneController.text,
                                   city: _cityController.text,
                                   state: _stateController.text,
                                   zip: _zipCodeController.text,
                                   userId: userController.user.value.id!,
                                 );
+
+                                Get.to(
+                                  () => ShippingAddressList(),
+                                  transition: Transition.rightToLeft,
+                                );
                               }
 
-                              debugPrint(
-                                'Name: ${_nameController.text}, Address: ${_addressLine1Controller.text}, Phone: ${_phoneController.text}, City: ${_cityController.text}, State: ${_stateController.text}, Zip: ${_zipCodeController.text}, User: ${userController.user.value.id}',
-                              );
+                              // Retrieve the values of the form fields
+                              String name = _nameController.text;
+                              String addressLine1 =
+                                  _addressLine1Controller.text;
+                              String addressLine2 =
+                                  _addressLine2Controller.text;
+                              String phone = _phoneController.text;
+                              String city = _cityController.text;
+                              String state = _stateController.text;
+                              String zipCode = _zipCodeController.text;
 
-                              clearFormFields();
+                              // Only print when all fields are valid, otherwise print nothing
+                              if (name.isNotEmpty &&
+                                  addressLine1.isNotEmpty &&
+                                  phone.isNotEmpty &&
+                                  city.isNotEmpty &&
+                                  state.isNotEmpty &&
+                                  zipCode.isNotEmpty) {
+                                clearFormFields();
+                                debugPrint(
+                                  'Name: $name, Address Line 1: $addressLine1, Address Line 2: $addressLine2, Phone: $phone, City: $city, State: $state, Zip Code: $zipCode, User: ${userController.user.value.id}',
+                                );
+                              } else {
+                                debugPrint('Please fill all fields');
+                              }
                             },
                             disable: shippingAddressService.isLoading.value,
                           ),

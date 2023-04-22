@@ -228,8 +228,10 @@ class CartScreen extends StatelessWidget {
                         if (shippingAddressService
                             .hasShippingAddressForCurrentUser()) {
                           Get.to(() => ShippingAddressList());
+                          debugPrint('has shipping address');
                         } else {
                           Get.to(() => CheckoutScreen());
+                          debugPrint('no shipping address');
                         }
                       },
                       child: Text('Checkout'),

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:fashion_app/helper/api_exception.dart';
 import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/services/endpoints.dart';
-import 'package:fashion_app/views/checkout/shipping_address_list.dart';
 import 'package:fashion_app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -144,12 +143,25 @@ class ShippingAddressService {
         isLoading(false);
         final jsonResponse = jsonDecode(response.body);
 
-        box.write('shippingAddressId', jsonResponse['data']['id']);
-
-        Get.to(
-          () => ShippingAddressList(),
-          transition: Transition.rightToLeft,
+        debugPrint(
+          'Response data: ${jsonResponse['data'] ?? 'No data available'}',
         );
+
+        if (jsonResponse['data'] != null &&
+            jsonResponse['data']['id'] != null) {
+          box.write('shippingAddress', jsonResponse['data']);
+          box.write('shippingAddressId', jsonResponse['data']['id']);
+        }
+
+        if (box.read('shippingAddressId') == null) {
+          // handle error
+          debugPrint('Error: Shipping Address ID is null');
+        } else {
+          debugPrint('Shipping Address ID: ${jsonResponse['data']['id']}');
+          debugPrint(
+            "Saved Shipping Address ID: ${box.read('shippingAddressId')}",
+          );
+        }
 
         CustomSnackbar.show(
           'Success',
