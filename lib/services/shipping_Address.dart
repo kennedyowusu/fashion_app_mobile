@@ -20,6 +20,8 @@ class ShippingAddressService {
 
   final GetStorage box = GetStorage();
 
+  final currentUserId = GetStorage().read('currentUserId');
+
   Future<ShippingAddressModelResponse> fetchShippingAddress() async {
     final url = Uri.parse(SHIPPING_ADDRESS_URL);
 
@@ -147,27 +149,26 @@ class ShippingAddressService {
           'Response data: ${jsonResponse['data'] ?? 'No data available'}',
         );
 
-        if (jsonResponse['data'] != null &&
-            jsonResponse['data']['id'] != null) {
-          box.write('shippingAddress', jsonResponse['data']);
-          box.write('shippingAddressId', jsonResponse['data']['id']);
-        }
-
-        if (box.read('shippingAddressId') == null) {
-          // handle error
-          debugPrint('Error: Shipping Address ID is null');
-        } else {
-          debugPrint('Shipping Address ID: ${jsonResponse['data']['id']}');
-          debugPrint(
-            "Saved Shipping Address ID: ${box.read('shippingAddressId')}",
-          );
-        }
-
         CustomSnackbar.show(
           'Success',
           'Shipping address created successfully',
           color: Colors.green,
         );
+
+        final updatedShippingAddresses = await fetchShippingAddress();
+
+        // Store the updated list locally
+        await box.write(
+          'shippingAddresses',
+          updatedShippingAddresses.data
+              .map((address) => address.toJson())
+              .toList(),
+        );
+
+        final readSavedShippingAddress = box.read('shippingAddresses');
+        debugPrint(readSavedShippingAddress);
+
+        debugPrint(updatedShippingAddresses.toString());
 
         debugPrint(jsonResponse.toString());
       } else {
@@ -280,12 +281,20 @@ class ShippingAddressService {
   }
 
   bool hasShippingAddressForCurrentUser() {
-    final shippingAddressId = box.read('shippingAddressId');
-    final currentUserId = box.read('currentUserId');
-    final savedAddressUserId = box.read('shippingAddressUserId');
+    final shippingAddresses =
+        GetStorage().read<List>('shippingAddresses') ?? [];
 
-    return shippingAddressId != null &&
-        currentUserId != null &&
-        savedAddressUserId == currentUserId;
+    if (currentUserId == null) {
+      return false;
+    }
+
+    final parsedCurrentUserId = int.tryParse(currentUserId);
+
+    if (parsedCurrentUserId == null) {
+      return false;
+    }
+
+    return shippingAddresses
+        .any((address) => address['user_id'] == parsedCurrentUserId);
   }
 }

@@ -21,11 +21,11 @@ void main() async {
   // box.remove('token');
   final token = box.read('token') ?? '';
   final currentUserId = box.read('currentUserId');
-  final shippingAddressId = box.read('shippingAddress');
-  final shippingAddress = box.read('shippingAddress');
-  debugPrint('Shipping Address: $shippingAddress');
+  // final shippingAddressId = box.read('shippingAddress');
+  // final shippingAddress = box.read('shippingAddress');
+  // debugPrint('Shipping Address: $shippingAddress');
   debugPrint('Token: $token');
-  debugPrint('Shipping Address ID: $shippingAddressId');
+  // debugPrint('Shipping Address ID: $shippingAddressId');
   debugPrint(currentUserId);
   runApp(FashionApp(isUserLoggedIn: token.isNotEmpty));
 }
