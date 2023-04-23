@@ -77,7 +77,7 @@ class ShippingAddressController extends GetxController {
       storeShippingAddressLocally.then((value) {
         debugPrint('Shipping Address stored locally');
       }).catchError((error) {
-        debugPrint('Shipping Address not stored locally');
+        debugPrint('Shipping Address NOT stored locally');
       });
 
       isLoading(false);
@@ -87,6 +87,11 @@ class ShippingAddressController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  bool hasLocalShippingAddress() {
+    final List<dynamic>? storedAddress = box.read('shippingAddress');
+    return storedAddress != null && storedAddress.isNotEmpty;
   }
 
   bool hasShippingAddress() {

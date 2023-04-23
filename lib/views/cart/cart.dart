@@ -1,4 +1,5 @@
 import 'package:fashion_app/controller/cart_controller.dart';
+import 'package:fashion_app/controller/shipping_address.dart';
 import 'package:fashion_app/model/products.dart';
 import 'package:fashion_app/services/shipping_Address.dart';
 import 'package:fashion_app/views/checkout/checkout.dart';
@@ -18,8 +19,8 @@ class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
   final box = GetStorage();
   final Product? product;
-  final ShippingAddressService shippingAddressService =
-      Get.put(ShippingAddressService());
+  final ShippingAddressController shippingAddressController =
+      Get.put(ShippingAddressController());
 
   @override
   Widget build(BuildContext context) {
@@ -225,8 +226,8 @@ class CartScreen extends StatelessWidget {
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () {
-                        if (shippingAddressService
-                            .hasShippingAddressForCurrentUser()) {
+                        if (shippingAddressController
+                            .hasLocalShippingAddress()) {
                           Get.to(() => ShippingAddressList());
                           debugPrint('has shipping address');
                         } else {
