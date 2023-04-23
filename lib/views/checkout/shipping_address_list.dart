@@ -1,6 +1,7 @@
 import 'package:fashion_app/controller/shipping_address.dart';
 import 'package:fashion_app/helper/config.dart';
 import 'package:fashion_app/model/shipping_address.dart';
+import 'package:fashion_app/views/notfound/no_shipping_address.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class ShippingAddressList extends StatelessWidget {
                   )
                 : shippingAddressController.shippingAddress.isEmpty
                     ? Center(
-                        child: Text('No Shipping Addresses found'),
+                        child: NoShippingAddressesFound(),
                       )
                     : ListView.builder(
                         itemCount:

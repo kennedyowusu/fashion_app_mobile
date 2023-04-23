@@ -1,6 +1,7 @@
 import 'package:fashion_app/views/auth/auth.dart';
 import 'package:fashion_app/views/checkout/shipping_address_list.dart';
-import 'package:fashion_app/views/no_inernet/no_internet.dart';
+import 'package:fashion_app/views/notfound/no_internet.dart';
+import 'package:fashion_app/views/notfound/no_shipping_address.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -69,15 +70,15 @@ class _FashionAppState extends State<FashionApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: hasInternetConnection
-          ? widget.isUserLoggedIn
-              ? const MainLayout()
-              : AuthSelector()
-          : NoInternetScreen(
-              message: 'No internet Connection.',
-            ),
+      // home: hasInternetConnection
+      //     ? widget.isUserLoggedIn
+      //         ? const MainLayout()
+      //         : AuthSelector()
+      //     : NoInternetScreen(
+      //         message: 'No internet Connection.',
+      //       ),
 
-      // home: ShippingAddressList(),
+      home: NoShippingAddressesFound(),
     );
   }
 }
