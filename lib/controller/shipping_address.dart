@@ -30,6 +30,16 @@ class ShippingAddressController extends GetxController {
     }
   }
 
+  Future<void> refreshShippingAddress() async {
+    isLoading(true);
+    final newShippingAddress = await ShippingAddressService()
+        .fetchShippingAddress()
+        .then((value) => value.data);
+    shippingAddress.clear();
+    shippingAddress.addAll(newShippingAddress);
+    isLoading(false);
+  }
+
   Future<void> createShippingAddress({
     required String name,
     required String address,
