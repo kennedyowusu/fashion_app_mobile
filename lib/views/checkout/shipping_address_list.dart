@@ -11,10 +11,16 @@ class ShippingAddressList extends StatelessWidget {
   final ShippingAddressController shippingAddressService =
       Get.put(ShippingAddressController());
 
+  final ShippingAddressController shippingAddressController =
+      Get.put(ShippingAddressController());
+
   ShippingAddressList({super.key});
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+      'Shipping Address List: ${shippingAddressController.shippingAddress.length}',
+    );
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Shipping Address',
@@ -43,20 +49,20 @@ class ShippingAddressList extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Obx(
-            () => shippingAddressService.isLoading.value
+            () => shippingAddressController.isLoading.value
                 ? Center(
                     child: Loader(),
                   )
-                : shippingAddressService.shippingAddress.isEmpty
+                : shippingAddressController.shippingAddress.isEmpty
                     ? Center(
                         child: Text('No Shipping Addresses found'),
                       )
                     : ListView.builder(
                         itemCount:
-                            shippingAddressService.shippingAddress.length,
+                            shippingAddressController.shippingAddress.length,
                         itemBuilder: (context, index) {
                           ShippingAddress address =
-                              shippingAddressService.shippingAddress[index];
+                              shippingAddressController.shippingAddress[index];
                           return Container(
                             height: 100,
                             width: double.infinity,

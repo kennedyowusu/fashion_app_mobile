@@ -1,4 +1,5 @@
 import 'package:fashion_app/views/auth/auth.dart';
+import 'package:fashion_app/views/checkout/shipping_address_list.dart';
 import 'package:fashion_app/views/no_inernet/no_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,6 +76,8 @@ class _FashionAppState extends State<FashionApp> {
           : NoInternetScreen(
               message: 'No internet Connection.',
             ),
+
+      // home: ShippingAddressList(),
     );
   }
 }

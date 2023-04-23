@@ -1,3 +1,4 @@
+import 'package:fashion_app/controller/shipping_address.dart';
 import 'package:fashion_app/controller/user.dart';
 import 'package:fashion_app/services/shipping_Address.dart';
 import 'package:fashion_app/views/checkout/shipping_address_list.dart';
@@ -30,9 +31,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   final TextEditingController _phoneController = TextEditingController();
 
   final UserController userController = Get.put(UserController());
-  // final PhoneController phoneController = Get.put(PhoneController());
   final ShippingAddressService shippingAddressService =
       Get.put(ShippingAddressService());
+
+  final ShippingAddressController shippingAddressController =
+      Get.put(ShippingAddressController());
 
   bool showTextFormField = false;
 
@@ -214,7 +217,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   SizedBox(height: 32.0),
                   Obx(
-                    () => shippingAddressService.isLoading.value
+                    () => shippingAddressController.isLoading.value
                         ? Center(
                             child: Loader(),
                           )
@@ -237,10 +240,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 print(
                                     'User ID: ${userController.user.value.id}');
 
-                                shippingAddressService.createShippingAddress(
+                                shippingAddressController.createShippingAddress(
                                   name: _nameController.text,
-                                  addressLineOne: _addressLine1Controller.text,
-                                  addressLineTwo: _addressLine2Controller.text,
+                                  address: _addressLine1Controller.text,
                                   phone: _phoneController.text,
                                   city: _cityController.text,
                                   state: _stateController.text,
@@ -280,7 +282,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 debugPrint('Please fill all fields');
                               }
                             },
-                            disable: shippingAddressService.isLoading.value,
+                            disable: shippingAddressController.isLoading.value,
                           ),
                   ),
                   SizedBox(height: 16.0),
@@ -290,7 +292,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     onPressed: () {
                       Get.back();
                     },
-                    disable: shippingAddressService.isLoading.value,
+                    disable: shippingAddressController.isLoading.value,
                   ),
                 ],
               ),

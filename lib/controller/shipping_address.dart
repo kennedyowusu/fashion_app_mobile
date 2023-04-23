@@ -16,12 +16,16 @@ class ShippingAddressController extends GetxController {
 
   Future<void> fetchShippingAddress() async {
     try {
+      isLoading(true);
       ShippingAddressModelResponse shippingAddressModelResponse =
           await ShippingAddressService().fetchShippingAddress();
       shippingAddress.assignAll(shippingAddressModelResponse.data);
+      isLoading(false);
     } catch (e) {
+      isLoading(false);
       debugPrint('Error: $e');
     } finally {
+      isLoading(false);
       debugPrint('Shipping Address: $shippingAddress');
     }
   }
@@ -36,6 +40,7 @@ class ShippingAddressController extends GetxController {
     required int userId,
   }) async {
     try {
+      isLoading(false);
       await ShippingAddressService().createShippingAddress(
         name: name,
         addressLineOne: address,
@@ -46,8 +51,12 @@ class ShippingAddressController extends GetxController {
         userId: userId,
       );
       fetchShippingAddress();
+      isLoading(false);
     } catch (e) {
+      isLoading(false);
       debugPrint('Error: $e');
+    } finally {
+      isLoading(false);
     }
   }
 
