@@ -1,7 +1,8 @@
+import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/widgets/appbar.dart';
-import 'package:fashion_app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class ConfirmationScreen extends StatefulWidget {
   const ConfirmationScreen({
@@ -97,20 +98,47 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             ),
             Divider(),
             SizedBox(height: 32.0),
-            Center(
-              child: Button(
-                title: "Return to Home",
-                width: double.infinity,
-                disable: false,
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.grey[200],
+        padding: EdgeInsets.all(16.0),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
                 onPressed: () {
-                  Navigator.popUntil(
-                    context,
-                    ModalRoute.withName(Navigator.defaultRouteName),
+                  Get.to(
+                    () => MainLayout(),
+                    transition: Transition.rightToLeft,
                   );
                 },
+                child: Text(
+                  'Return Home',
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange,
+                  ),
+                ),
               ),
-            ),
-          ],
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {},
+                child: Text(
+                  'Make Payment Now',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

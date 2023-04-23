@@ -1,8 +1,11 @@
+import 'package:fashion_app/views/confirm/confirmation.dart';
+import 'package:fashion_app/views/confirm/order_confirmation.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:fashion_app/widgets/payment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -75,13 +78,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
               SizedBox(height: 10),
-              PaymentExpansionTile(
-                icon: Icons.money_sharp,
-                title: 'Other Payment',
-                subtitle: 'Paypal',
-                color: Colors.green,
-                child: Column(
-                  children: [],
+              GestureDetector(
+                onTap: () {},
+                child: PaymentExpansionTile(
+                  icon: Icons.money_sharp,
+                  title: 'Other Payment',
+                  subtitle: 'Paypal',
+                  color: Colors.green,
+                  child: Column(
+                    children: [],
+                  ),
                 ),
               ),
               SizedBox(height: 10),
@@ -93,7 +99,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
         padding: EdgeInsets.all(10),
         child: Button(
           title: 'Pay On Delivery',
-          onPressed: () {},
+          onPressed: () {
+            Get.to(() => ConfirmationScreen());
+          },
           width: double.infinity,
           disable: false,
         ),
