@@ -70,15 +70,15 @@ class _FashionAppState extends State<FashionApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: hasInternetConnection
-      //     ? widget.isUserLoggedIn
-      //         ? const MainLayout()
-      //         : AuthSelector()
-      //     : NoInternetScreen(
-      //         message: 'No internet Connection.',
-      //       ),
+      home: hasInternetConnection
+          ? widget.isUserLoggedIn
+              ? const MainLayout()
+              : AuthSelector()
+          : NoInternetScreen(
+              message: 'No internet Connection.',
+            ),
 
-      home: ShippingAddressList(),
+      // home: ShippingAddressList(),
     );
   }
 }

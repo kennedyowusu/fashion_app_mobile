@@ -2,11 +2,19 @@ import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/services/shipping_Address.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ShippingAddressController extends GetxController {
+  final ShippingAddressService shippingAddressService =
+      ShippingAddressService();
+
   final RxList<ShippingAddress> shippingAddress = <ShippingAddress>[].obs;
 
   final isLoading = false.obs;
+
+  final GetStorage box = GetStorage();
+
+  final currentUserId = GetStorage().read('currentUserId');
 
   @override
   void onInit() {
@@ -51,7 +59,7 @@ class ShippingAddressController extends GetxController {
   }) async {
     try {
       isLoading(false);
-      await ShippingAddressService().createShippingAddress(
+      await shippingAddressService.createShippingAddress(
         name: name,
         addressLineOne: address,
         city: city,
@@ -60,7 +68,18 @@ class ShippingAddressController extends GetxController {
         phone: phone,
         userId: userId,
       );
+
       fetchShippingAddress();
+
+      Future<void> storeShippingAddressLocally =
+          box.write('shippingAddress', shippingAddress);
+
+      storeShippingAddressLocally.then((value) {
+        debugPrint('Shipping Address stored locally');
+      }).catchError((error) {
+        debugPrint('Shipping Address not stored locally');
+      });
+
       isLoading(false);
     } catch (e) {
       isLoading(false);
@@ -68,6 +87,10 @@ class ShippingAddressController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  bool hasShippingAddress() {
+    return shippingAddress.isNotEmpty;
   }
 
   Future<void> updateShippingAddress({
@@ -81,7 +104,7 @@ class ShippingAddressController extends GetxController {
     required int userId,
   }) async {
     try {
-      await ShippingAddressService().updateShippingAddress(
+      await shippingAddressService.updateShippingAddress(
         id: id,
         name: name,
         addressLineOne: address,
@@ -101,7 +124,7 @@ class ShippingAddressController extends GetxController {
     required int id,
   }) async {
     try {
-      await ShippingAddressService().deleteShippingAddress(
+      await shippingAddressService.deleteShippingAddress(
         shippingAddressId: id,
       );
       fetchShippingAddress();
