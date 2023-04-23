@@ -1,12 +1,15 @@
 import 'package:fashion_app/controller/shipping_address.dart';
 import 'package:fashion_app/helper/config.dart';
 import 'package:fashion_app/model/shipping_address.dart';
+import 'package:fashion_app/views/checkout/checkout.dart';
 import 'package:fashion_app/views/notfound/no_shipping_address.dart';
 import 'package:fashion_app/widgets/appbar.dart';
+import 'package:fashion_app/widgets/button.dart';
 import 'package:fashion_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ShippingAddressList extends StatelessWidget {
   final ShippingAddressController shippingAddressService =
@@ -15,6 +18,8 @@ class ShippingAddressList extends StatelessWidget {
   final ShippingAddressController shippingAddressController =
       Get.put(ShippingAddressController());
 
+  final box = GetStorage();
+
   ShippingAddressList({super.key});
 
   @override
@@ -22,6 +27,8 @@ class ShippingAddressList extends StatelessWidget {
     debugPrint(
       'Shipping Address List: ${shippingAddressController.shippingAddress.length}',
     );
+    final addresses = box.read('shippingAddress');
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Shipping Address',
@@ -110,6 +117,43 @@ class ShippingAddressList extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: addresses is List && addresses.length > 5
+          ? BottomAppBar(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Center(
+                  child: Text(
+                    'delete one address to add new one'.toUpperCase(),
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : Container(
+              height: 54.0,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+              ),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Button(
+                onPressed: () {
+                  // Navigate to Add Shipping Address screen
+                  Get.to(
+                    () => CheckoutScreen(),
+                    transition: Transition.rightToLeft,
+                  );
+                },
+                title: 'Add New Address',
+                disable: false,
+                width: double.infinity,
+              ),
+            ),
     );
   }
 }
