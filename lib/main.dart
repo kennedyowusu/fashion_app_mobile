@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'layout.dart';
 
@@ -41,11 +42,34 @@ class FashionApp extends StatefulWidget {
 
 class _FashionAppState extends State<FashionApp> {
   bool hasInternetConnection = true;
+  String appVersion = '';
 
   @override
   void initState() {
     super.initState();
     checkInternetConnection();
+    checkAppVersion();
+  }
+
+  Future<void> checkAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    appVersion = packageInfo.version;
+    debugPrint('App Version: $appVersion');
+
+    // Perform any version-specific actions or checks here
+    if (appVersion == '1.0.0') {
+      // Execute code specific to version 1.0.0
+      debugPrint('Performing actions for version 1.0.0...');
+      // ...
+    } else if (appVersion == '2.0.0') {
+      // Execute code specific to version 2.0.0
+      debugPrint('Performing actions for version 2.0.0...');
+      // ...
+    } else {
+      // Handle other app versions
+      debugPrint('Performing actions for other app versions...');
+      // ...
+    }
   }
 
   Future<void> checkInternetConnection() async {
