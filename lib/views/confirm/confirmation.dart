@@ -1,4 +1,6 @@
+import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/layout.dart';
+import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,7 +9,10 @@ import 'package:get/get.dart';
 class ConfirmationScreen extends StatefulWidget {
   const ConfirmationScreen({
     super.key,
+    required this.shippingAddress,
   });
+
+  final ShippingAddress shippingAddress;
 
   @override
   State<ConfirmationScreen> createState() => _ConfirmationScreenState();
@@ -15,8 +20,7 @@ class ConfirmationScreen extends StatefulWidget {
 
 class _ConfirmationScreenState extends State<ConfirmationScreen> {
   String orderNumber = '1';
-  String shippingAddress = '123 Main St, New York, NY 10001';
-  String paymentMethod = 'Visa ending in 1234';
+  String paymentMethod = 'Paystack';
   double totalPrice = 100.0;
   DateTime estimatedDeliveryDate = DateTime.now().add(Duration(days: 3));
   List<String> itemsPurchased = [
@@ -25,8 +29,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
     'Red Sneakers',
   ];
 
+  final CartController cartController = Get.put(CartController());
+
   @override
   Widget build(BuildContext context) {
+    final cartItems = cartController.cartItems;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Order Confirmation',
@@ -56,30 +63,33 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            OrderData(orderInformation: "Order Number: \n$orderNumber"),
+            // OrderData(orderInformation: "Order Number: \n$orderNumber"),
             Divider(),
             SizedBox(height: 16.0),
-            OrderData(orderInformation: "Shipping Address: \n$shippingAddress"),
+            OrderData(
+              orderInformation:
+                  "Shipping Address: \n${widget.shippingAddress.addressLine1}, ${widget.shippingAddress.city}, ${widget.shippingAddress.state}",
+            ),
             Divider(),
             SizedBox(height: 16.0),
             OrderData(orderInformation: "Payment Method: \n$paymentMethod"),
             Divider(),
             SizedBox(height: 16.0),
             Text(
-              '3 Items Purchased:',
+              '${cartItems.length} Items Purchased',
               style: TextStyle(fontSize: 16.0),
             ),
             Divider(),
             SizedBox(height: 8.0),
             Expanded(
               child: ListView.separated(
-                itemCount: itemsPurchased.length,
+                itemCount: cartItems.length,
                 separatorBuilder: (context, index) {
                   return Divider();
                 },
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(itemsPurchased[index]),
+                    title: Text(cartItems[index].name),
                   );
                 },
               ),
@@ -88,7 +98,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             SizedBox(height: 16.0),
             OrderData(
               orderInformation:
-                  'Total Price: \n\$${totalPrice.toStringAsFixed(2)}',
+                  'Total Price: \n\$${cartController.totalAmount.toStringAsFixed(2)}',
             ),
             Divider(),
             SizedBox(height: 16.0),
