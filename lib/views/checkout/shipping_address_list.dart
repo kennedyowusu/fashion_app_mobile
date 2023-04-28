@@ -165,7 +165,7 @@ class ShippingAddressList extends StatelessWidget {
                                     );
                                   }
                                 }
-                                // Remove the dismissed item from the list
+
                                 shippingAddressController.shippingAddress
                                     .removeAt(index);
                               },
@@ -187,7 +187,9 @@ class ShippingAddressList extends StatelessWidget {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  Get.to(() => PaymentScreen());
+                                  Get.to(() => PaymentScreen(
+                                        shippingAddress: address,
+                                      ));
                                   debugPrint(
                                       'Shipping Address: ${address.toJson()}');
                                 },
