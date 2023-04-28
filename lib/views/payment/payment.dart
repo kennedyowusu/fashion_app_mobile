@@ -1,14 +1,16 @@
+import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/views/confirm/confirmation.dart';
-import 'package:fashion_app/views/confirm/order_confirmation.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:fashion_app/widgets/payment_widget.dart';
+import 'package:fashion_app/widgets/paystack.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  const PaymentScreen({super.key, required this.shippingAddress});
+  final ShippingAddress shippingAddress;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -82,11 +84,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 onTap: () {},
                 child: PaymentExpansionTile(
                   icon: Icons.money_sharp,
-                  title: 'Other Payment',
-                  subtitle: 'Paypal',
+                  title: 'Paystack',
+                  subtitle: '',
                   color: Colors.green,
                   child: Column(
-                    children: [],
+                    children: [
+                      PaystackCard(
+                        shippingAddress: widget.shippingAddress,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -100,7 +106,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Button(
           title: 'Pay On Delivery',
           onPressed: () {
-            Get.to(() => ConfirmationScreen());
+            Get.to(
+              () => ConfirmationScreen(
+                shippingAddress: widget.shippingAddress,
+              ),
+            );
           },
           width: double.infinity,
           disable: false,
