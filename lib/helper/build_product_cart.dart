@@ -8,16 +8,21 @@ Stack buildProductCart() {
   return Stack(
     children: [
       IconButton(
+        padding: EdgeInsets.only(left: 10, top: 10.0),
         onPressed: () {
           Get.to(
             () => CartScreen(),
           );
         },
-        icon: Icon(Icons.shopping_cart),
+        icon: Icon(
+          Icons.shopping_cart,
+          color: Colors.black,
+          size: 30,
+        ),
       ),
       Positioned(
-        top: 0,
-        right: 12,
+        top: 5,
+        right: 10,
         child: Container(
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(

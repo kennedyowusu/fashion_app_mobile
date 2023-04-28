@@ -1,3 +1,4 @@
+import 'package:fashion_app/controller/theme.dart';
 import 'package:fashion_app/views/auth/auth.dart';
 import 'package:fashion_app/views/notfound/no_internet.dart';
 import 'package:flutter/material.dart';
@@ -83,24 +84,27 @@ class _FashionAppState extends State<FashionApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Fashion Shop',
-      debugShowCheckedModeBanner: false,
-      transitionDuration: const Duration(milliseconds: 500),
-      defaultTransition: Transition.fade,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: hasInternetConnection
-          ? widget.isUserLoggedIn
-              ? const MainLayout()
-              : AuthSelector()
-          : NoInternetScreen(
-              message: 'No internet Connection.',
-            ),
+    return GetBuilder<ThemeController>(
+      init: ThemeController(),
+      builder: (controller) {
+        final currentTheme = controller.currentTheme.value;
+        return GetMaterialApp(
+          title: 'Fashion Shop',
+          debugShowCheckedModeBanner: false,
+          transitionDuration: const Duration(milliseconds: 500),
+          defaultTransition: Transition.fade,
+          theme: currentTheme,
+          home: hasInternetConnection
+              ? widget.isUserLoggedIn
+                  ? const MainLayout()
+                  : AuthSelector()
+              : NoInternetScreen(
+                  message: 'No internet Connection.',
+                ),
 
-      // home: PaymentScreen(),
+          // home: PaymentScreen(),
+        );
+      },
     );
   }
 }
