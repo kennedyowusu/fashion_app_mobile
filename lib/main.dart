@@ -1,10 +1,5 @@
 import 'package:fashion_app/views/auth/auth.dart';
-import 'package:fashion_app/views/checkout/shipping_address_list.dart';
-import 'package:fashion_app/views/confirm/confirmation.dart';
-import 'package:fashion_app/views/confirm/order_confirmation.dart';
 import 'package:fashion_app/views/notfound/no_internet.dart';
-import 'package:fashion_app/views/notfound/no_shipping_address.dart';
-import 'package:fashion_app/views/payment/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
