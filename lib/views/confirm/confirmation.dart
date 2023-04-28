@@ -2,6 +2,7 @@ import 'package:fashion_app/controller/cart_controller.dart';
 import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/widgets/appbar.dart';
+import 'package:fashion_app/widgets/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -63,7 +64,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // OrderData(orderInformation: "Order Number: \n$orderNumber"),
             Divider(),
             SizedBox(height: 16.0),
             OrderData(
@@ -141,7 +141,14 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CustomDialog();
+                    },
+                  );
+                },
                 child: Text(
                   'Make Payment Now',
                   style: TextStyle(fontSize: 16.0),
