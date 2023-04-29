@@ -1,4 +1,6 @@
 import 'package:fashion_app/controller/cart_controller.dart';
+import 'package:fashion_app/controller/payment.dart';
+import 'package:fashion_app/controller/user.dart';
 import 'package:fashion_app/layout.dart';
 import 'package:fashion_app/model/shipping_address.dart';
 import 'package:fashion_app/widgets/appbar.dart';
@@ -31,6 +33,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
   ];
 
   final CartController cartController = Get.put(CartController());
+  final UserController userController = Get.put(UserController());
+  final PaymentController paymentController = Get.put(PaymentController());
 
   @override
   Widget build(BuildContext context) {
@@ -142,12 +146,13 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CustomDialog();
-                    },
-                  );
+                  paymentController.makePayment();
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return CustomDialog();
+                  //   },
+                  // );
                 },
                 child: Text(
                   'Make Payment Now',
