@@ -42,7 +42,7 @@ class CartScreen extends StatelessWidget {
           child: Center(
             child: IconButton(
               onPressed: () {
-                Get.off(() => HomeView());
+                Get.back();
               },
               icon: FaIcon(
                 FontAwesomeIcons.chevronLeft,

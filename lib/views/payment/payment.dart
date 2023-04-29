@@ -113,7 +113,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             );
           },
           width: double.infinity,
-          disable: false,
+          disable: true,
         ),
       ),
     );

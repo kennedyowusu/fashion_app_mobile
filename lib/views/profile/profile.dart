@@ -25,7 +25,6 @@ class ProfileView extends StatelessWidget {
             final user = userController.user.value;
 
             if (userController.isLoading.value) {
-              // Show loading indicator while user data is being fetched
               return Center(
                   child: CircularProgressIndicator(
                 color: Config.primaryColor,
@@ -134,24 +133,8 @@ class ProfileView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Text(
-                              'Dark Mode',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            const Spacer(),
-                            Switch(
-                              value: true,
-                              onChanged: (value) {},
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          padding: EdgeInsets.symmetric(vertical: 10.0),
                           child: ListTile(
                             onTap: () {
                               authController.logoutUser();
@@ -162,9 +145,13 @@ class ProfileView extends StatelessWidget {
                                 fontSize: 16,
                               ),
                             ),
-                            leading: Icon(
-                              Icons.logout,
-                              color: Config.primaryColor,
+                            leading: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Config.primaryColor,
+                              child: Icon(
+                                Icons.logout,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),

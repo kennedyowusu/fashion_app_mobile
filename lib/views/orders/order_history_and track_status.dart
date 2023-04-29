@@ -2,7 +2,6 @@ import 'package:fashion_app/views/recommendation/personalized_recommendation.dar
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/button.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class OrderHistoryAndTrackingOrderStatus extends StatelessWidget {
@@ -12,27 +11,7 @@ class OrderHistoryAndTrackingOrderStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Order History & Tracking Order Status',
-        leadingIcon: FaIcon(
-          FontAwesomeIcons.chevronLeft,
-          color: Colors.black,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white,
-              ),
-              child: Icon(
-                Icons.favorite_border,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
+        title: 'Fashion Shop',
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
