@@ -1,3 +1,4 @@
+import 'package:fashion_app/controller/payment.dart';
 import 'package:fashion_app/controller/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ class CustomDialog extends StatelessWidget {
 
   final CartController cartController = Get.put(CartController());
   final UserController userController = Get.put(UserController());
+  final PaymentController paymentController = Get.put(PaymentController());
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +192,8 @@ class CustomDialog extends StatelessWidget {
               print('Field 3: $field3');
 
               formKey.currentState!.validate();
+
+              paymentController.makePayment();
 
               // Navigator.of(context).pop();
             },
