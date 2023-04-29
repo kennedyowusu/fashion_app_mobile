@@ -45,6 +45,7 @@ dependencies:
   connectivity: ^3.0.6
   fluttertoast: ^8.2.1
   package_info_plus: ^3.1.2
+  flutter_paystack: ^1.0.7
 
 dev_dependencies:
   flutter_test:
