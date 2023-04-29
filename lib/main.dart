@@ -17,7 +17,9 @@ import 'layout.dart';
 **/
 
 void main() async {
+  // Ensure that Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
+
   await GetStorage.init();
   final box = GetStorage();
   // box.remove('token');
