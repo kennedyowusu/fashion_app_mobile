@@ -20,52 +20,49 @@ class CustomDialog extends StatelessWidget {
     return Form(
       key: formKey,
       child: AlertDialog(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/paystack.png',
-              width: 30.0,
-              height: 40.0,
-            ),
-            SizedBox(width: 50.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.lock,
-                        color: Colors.black,
-                        size: 16.0,
-                      ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        'Secured by',
-                        style: TextStyle(
-                          fontSize: 16.0,
+        title: Padding(
+          padding: const EdgeInsets.only(
+            left: 28.0,
+          ),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 8.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.lock,
+                          color: Colors.black,
+                          size: 16.0,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 5.0),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    'Paystack',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                        SizedBox(width: 10.0),
+                        Text(
+                          'Secured by Paystack',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                  SizedBox(height: 5.0),
+                ],
+              ),
+              SizedBox(width: 10.0),
+              Image.asset(
+                'assets/images/paystack.png',
+                width: 15.0,
+                height: 15.0,
+              ),
+            ],
+          ),
         ),
         content: Container(
           width: 450.0,
@@ -145,7 +142,7 @@ class CustomDialog extends StatelessWidget {
                   Text(userController.user.value.name!),
                   SizedBox(width: 15.0),
                   Text(
-                    cartController.totalAmount.toString(),
+                    "GHS${cartController.totalAmount.value.toStringAsFixed(2)}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16.0,
