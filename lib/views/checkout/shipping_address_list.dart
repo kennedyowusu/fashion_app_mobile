@@ -236,19 +236,13 @@ class ShippingAddressList extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: addresses is List && addresses.length > 5
+      bottomNavigationBar: addresses is List && addresses.length >= 5
           ? BottomAppBar(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Center(
-                  child: Text(
-                    'delete one address to add new one'.toUpperCase(),
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              child: Button(
+                disable: true,
+                title: 'Delete one address to add new one',
+                width: double.infinity,
+                onPressed: () {},
               ),
             )
           : Container(
