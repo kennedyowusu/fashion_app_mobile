@@ -35,11 +35,9 @@ class CartController extends GetxController {
       isLoading(true);
       final cartItems = await _cartService.getCartItems();
       this.cartItems.assignAll(cartItems);
-      // Check if cart is empty and show message if it is
       if (cartItems.isEmpty) {
         Get.snackbar('Empty Cart', 'Your cart is empty.');
       }
-      debugPrint('Cart items from Controller: ${cartItems.length}');
       updateTotalAmount();
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch cart items: $e');

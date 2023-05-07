@@ -22,7 +22,7 @@ void main() async {
 
   await GetStorage.init();
   final box = GetStorage();
-  // box.remove('token');
+  box.remove('token');
   final token = box.read('token') ?? '';
   final currentUserId = box.read('currentUserId');
   // final shippingAddressId = box.read('shippingAddress');

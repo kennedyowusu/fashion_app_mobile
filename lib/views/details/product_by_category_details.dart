@@ -1,4 +1,3 @@
-import 'package:fashion_app/constants/images.dart';
 import 'package:fashion_app/controller/category_products.dart';
 import 'package:fashion_app/widgets/appbar.dart';
 import 'package:fashion_app/widgets/empty_screen.dart';
